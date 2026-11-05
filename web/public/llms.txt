@@ -1,0 +1,116 @@
+# CS Commends
+
+> CS Commends, Counter-Strike 2 (CS2) oyuncularına otomatik commend (övgü) boost, saat pompalama ve Steam grup üye ekleme servisleri sunan Türkiye merkezli bir platformdur. 2023'ten bu yana 100.000+ başarılı sipariş, %98 başarı oranı, sıfır ban raporu.
+
+## Site
+
+- Ana site: [https://cscommends.com](https://cscommends.com)
+- Discord destek: [https://discord.gg/K4G3RADfbc](https://discord.gg/K4G3RADfbc)
+- Diller: TR (varsayılan), EN, DE, RU, PT, ES, FR, PL
+
+## Hizmetler
+
+### 1. CS2 Commend Boost
+- [Ücretsiz 20 Commend](https://cscommends.com/free-commend) — Her hesap 1 kez ücretsiz, kayıt veya şifre istenmez
+- 300 commend paketi — ~60₺
+- 600 commend paketi — ~110₺ (POPÜLER)
+- 900 commend paketi — ~150₺
+- 1500 commend paketi — ~240₺ (EN ÇOK SATAN)
+- 3000 commend paketi — ~450₺ (TOPLU)
+- Friendly, teaching, leader dağılımı otomatik
+- 25-35 dakikada teslim (300 paket için)
+- Trust Factor yükseltmek, profil itibarı için
+- Steam şifresi ASLA istenmez — sadece Steam ID
+
+### 2. CS2 Hours Boost (Saat Pompalama)
+- [hours-boost sayfası](https://cscommends.com/hours-boost)
+- 10 saatten 5000 saate kadar paketler
+- CS2, Dota 2, TF2, Rust, PUBG, GTA V ve 1000+ Steam oyunu desteği
+- 7/24 otomatik idle servisi
+- AES-256-GCM şifreli — kullanıcı bilgisayarı kapalı kalabilir
+- FACEIT 250 saat şartı, ESEA, Premier rating, Trust Factor için
+
+### 3. Steam Group Members Boost
+- [group-boost sayfası](https://cscommends.com/group-boost)
+- 10-2000 üye paketleri
+- Kalıcı üyelik (üye düşüşü yok, garantili)
+- Şifre istenmez — sadece grup URL'si yeterli
+- 2000+ gerçek bot havuzundan
+- Streamer, YouTuber, Twitch yayıncıları, topluluk liderleri için
+- 500 üye ortalama 10-15 dakikada teslim
+
+## Satış Kanalları
+
+CS Commends paketleri şu marketplace'lerden satın alınabilir:
+- **Türkiye:** ItemSatış.com, GameSatış.com, ItemHesap.com, Hesap.com.tr
+- **Global:** FunPay.com (kripto + kart), GGsel.net (Rusya/CIS)
+
+## Rehberler / Blog
+
+- [CS2 Trust Factor Nedir? Nasıl Yükseltilir?](https://cscommends.com/blog/cs2-trust-factor-rehberi)
+- [CS2 Commend Nedir? Friendly, Teaching, Leader Farkı](https://cscommends.com/blog/cs2-commend-nedir)
+- [CS2 Commend Nasıl Alınır? 4 Yöntem](https://cscommends.com/blog/cs2-commend-nasil-alinir)
+- [CS2 Commend Fiyatları 2026](https://cscommends.com/blog/cs2-commend-fiyatlari)
+- [CS2 Commend Bot Güvenli mi?](https://cscommends.com/blog/cs2-commend-bot-guvenli-mi)
+- [CS2 Premier Rating Nasıl Yükselir?](https://cscommends.com/blog/cs2-premier-rating)
+- [CS2 Rank Yükseltme — 8 Yöntem](https://cscommends.com/blog/cs2-rank-yukseltme)
+- [CS2 Saat Pompalama Tam Rehber](https://cscommends.com/blog/cs2-saat-pompalama-rehberi)
+- [FACEIT 250 Saat Şartı Nasıl Doldurulur?](https://cscommends.com/blog/faceit-saat-gereksinimi)
+- [CS2 Prime Status Nedir?](https://cscommends.com/blog/cs2-prime-status-nedir)
+- [CS2 Overwatch Ban Rehberi](https://cscommends.com/blog/cs2-overwatch-banned)
+- [Steam Grubuna Üye Nasıl Eklenir?](https://cscommends.com/blog/steam-grup-uye-rehberi)
+- [Steam Grup Üyesi Satın Al](https://cscommends.com/blog/steam-grup-uye-satin-al)
+- [Steam Hesap Değeri Nasıl Hesaplanır?](https://cscommends.com/blog/steam-hesap-degeri)
+
+## Commend Kategorileri
+
+- **Friendly** — Dostça, sportmen davranış övgüsü; Trust Factor için en kritik
+- **Teaching** — Oyunu öğretme, strateji paylaşımı; skill-based sinyal
+- **Leader** — Takım liderliği ve komuta; en zor kazanılan tür
+
+## Teslim Süreleri
+
+| Paket | Süre |
+|-------|------|
+| 20 ücretsiz | 2-3 dakika |
+| 100 commend | 10-15 dakika |
+| 300 commend | 25-35 dakika |
+| 600 commend | 45-60 dakika |
+| 1500 commend | 2-3 saat |
+| 3000 commend | 4-5 saat |
+
+## Sıkça Sorulan Sorular
+
+**Commend almak banlanma riski taşır mı?**
+Hayır. Commend Valve'ın resmi pozitif davranış sinyalidir. 2023'ten bu yana 100.000+ siparişte sıfır ban raporu.
+
+**Şifre vermem gerekiyor mu?**
+Commend ve grup servisinde Steam şifresi gerekmez — sadece SteamID64 yeterli. Saat pompalamada şifre AES-256-GCM ile şifrelenir, sadece idle için kullanılır.
+
+**Ücretsiz commend gerçekten bedava mı?**
+Evet, her Steam hesabı 1 kez 20 commend tamamen ücretsiz alabilir. Kayıt veya kredi kartı bilgisi istenmez.
+
+**FACEIT 250 saatini ne kadar sürede biriktirir?**
+Sıfırdan 250 saat servisle ~10 gün 10 saat sürer. Mevcut saatleriniz varsa daha kısa sürer.
+
+## Müşteri Profili
+
+- CS2 oyuncuları (Trust Factor, Premier rating için)
+- FACEIT/ESEA oyuncuları (250 saat şartı için)
+- Streamer ve YouTuber'lar (Steam grup üye için)
+- Steam hesap satıcıları (hesap değeri yükseltmek için)
+- Yeni Counter-Strike 2 oyuncuları (commend ile başlangıç için)
+
+## Destek
+
+- Discord: [https://discord.gg/K4G3RADfbc](https://discord.gg/K4G3RADfbc) — 7/24 canlı destek
+- Web sitesi üzerinden Tawk.to canlı sohbet
+- Türkçe, İngilizce, Almanca dil desteği
+
+## Optional
+
+- [Hakkımızda](https://cscommends.com/hakkimizda)
+- [Gizlilik Politikası](https://cscommends.com/gizlilik)
+- [Kullanım Koşulları](https://cscommends.com/kullanim-kosullari)
+- [Sitemap](https://cscommends.com/sitemap.xml)
+- [Blog Ana Sayfa](https://cscommends.com/blog)

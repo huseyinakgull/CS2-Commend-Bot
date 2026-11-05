@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title data-i18n-title="meta.title.privacy">Gizlilik Politikası — CS Commends</title>
+	<meta name="description" data-i18n-content="meta.desc.privacy" content="CS Commends gizlilik politikası. Hangi verileri topluyoruz, nasıl kullanıyoruz ve nasıl koruyoruz.">
+	<meta name="robots" content="index, follow">
+	<meta name="theme-color" content="#0e0e15">
+	<link rel="canonical" href="https://cscommends.com/gizlilik">
+	<link rel="icon" type="image/jpeg" href="/logo.jpg">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/theme.css">
+
+	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/theme-toc.css?v=1">
+
+	<style>
+		body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+		article h2 { margin-top: 2rem; margin-bottom: 0.75rem; }
+		article h3 { margin-top: 1.4rem; margin-bottom: 0.5rem; color: var(--fg-1); font-size: 1rem; }
+		article p, article ul { color: var(--fg-2); line-height: 1.7; margin-bottom: 0.8rem; }
+		article ul { padding-left: 1.3rem; }
+		article strong { color: var(--fg-1); }
+	</style>
+</head>
+<body>
+
+<div class="page">
+	<header class="nav">
+		<div class="container">
+			<div class="nav-inner">
+				<a href="/" class="nav-brand"><img src="/logo.jpg" alt="CS Commends" width="40" height="40"><span>CS Commends</span></a>
+				<nav class="nav-actions">
+					<a href="/" class="btn btn-ghost btn-sm">Ana Sayfa</a>
+					<a href="/hakkimizda" class="btn btn-ghost btn-sm">Hakkımızda</a>
+				</nav>
+			</div>
+		</div>
+	</header>
+
+	<main class="page-main container container-md" style="padding: 2rem 1.25rem 3rem;">
+
+		<nav aria-label="Breadcrumb" style="font-size: 0.82rem; color: var(--fg-3); margin-bottom: 1.5rem;">
+			<a href="/" style="color: var(--fg-3);">Ana Sayfa</a> · <span style="color: var(--fg-2);">Gizlilik Politikası</span>
+		</nav>
+
+		<article>
+			<h1>Gizlilik Politikası</h1>
+			<p class="text-muted fs-sm mb-4">Son güncelleme: 24 Nisan 2026</p>
+
+			<h2>1. Topladığımız Veriler</h2>
+
+			<h3>1.1 Commend ve Grup Hizmetleri</h3>
+			<p>
+				Commend ve grup üye servislerinde <strong>Steam şifrenizi istemeyiz</strong>.
+				Yalnızca aşağıdaki bilgileri toplarız:
+			</p>
+			<ul>
+				<li><strong>SteamID64</strong> — commend hedefi</li>
+				<li><strong>Grup URL veya ID</strong> — grup üye servisi</li>
+				<li><strong>IP adresiniz</strong> — rate-limiting ve güvenlik için (30 gün saklanır)</li>
+			</ul>
+
+			<h3>1.2 Hours Boost Hizmeti</h3>
+			<p>
+				Saat pompalama hizmetinde Steam hesabınıza giriş yapmamız gerekir.
+				Bu nedenle aşağıdaki bilgileri alırız:
+			</p>
+			<ul>
+				<li><strong>Steam kullanıcı adı</strong></li>
+				<li><strong>Steam şifresi</strong> — <strong>AES-256-GCM</strong> ile şifrelenir, veritabanında şifrelenmiş blob olarak saklanır</li>
+				<li><strong>Steam Guard Mobile "shared secret"</strong> (opsiyonel, 2FA için) — aynı şekilde şifrelenir</li>
+			</ul>
+			<p>
+				Bu bilgilere sadece idle servisi erişir. Hesabınızla başka hiçbir işlem yapılmaz
+				(trade, arkadaş ekleme, gruba katılma, inventuar değişikliği vb.).
+			</p>
+
+			<h3>1.3 Otomatik Toplanan Veriler</h3>
+			<ul>
+				<li><strong>Çerez</strong>: Oturum yönetimi, dil tercihi ve Discord doğrulama için teknik çerezler</li>
+				<li><strong>Google Analytics</strong>: Anonim site kullanım istatistikleri</li>
+				<li><strong>Tawk.to</strong>: Canlı destek sohbet verileri</li>
+			</ul>
+
+			<h2>2. Verileri Nasıl Kullanırız?</h2>
+			<ul>
+				<li>Hizmeti sağlamak (commend gönderme, saat pompalama, grup üye ekleme)</li>
+				<li>Kötüye kullanım önlemek (rate-limit, bot tespiti)</li>
+				<li>Destek taleplerine cevap vermek</li>
+				<li>Servis performansını iyileştirmek (toplu/anonim istatistikler)</li>
+			</ul>
+
+			<h2>3. Verileri Paylaşıyor muyuz?</h2>
+			<p>
+				<strong>Hayır.</strong> Verileri üçüncü kişilere satmıyor veya paylaşmıyoruz. İstisna olarak yasal
+				zorunluluklar (mahkeme kararı vb.) doğabilir.
+			</p>
+			<p>Satın alma sürecinde üçüncü parti platformlar (ItemSatış, FunPay, GGsel, GameSatış) kendi gizlilik politikalarını uygular.</p>
+
+			<h2>4. Verilerin Saklanma Süresi</h2>
+			<ul>
+				<li><strong>Commend/Grup işlem kayıtları:</strong> 1 yıl</li>
+				<li><strong>IP adresleri:</strong> 30 gün (rate-limit için)</li>
+				<li><strong>Hours Boost credentials:</strong> Oturum iptal edilene kadar. Oturum bittiğinde silinir.</li>
+				<li><strong>Discord doğrulama cookie'si:</strong> 30 dakika</li>
+				<li><strong>Audit logları:</strong> 1 yıl</li>
+			</ul>
+
+			<h2>5. Güvenlik Önlemleri</h2>
+			<ul>
+				<li>Tüm trafik <strong>HTTPS</strong> (TLS 1.2+) üzerinden şifrelenir</li>
+				<li>Şifreler ve hassas bilgiler <strong>AES-256-GCM</strong> ile şifrelenir</li>
+				<li>JWT oturumlar kısa ömürlüdür (24 saat)</li>
+				<li><strong>Strict-Transport-Security</strong>, <strong>X-Frame-Options</strong>, <strong>Content-Security-Policy</strong> header'ları aktif</li>
+				<li>Düzenli güvenlik taraması ve güncellemeler</li>
+			</ul>
+
+			<h2>6. Kullanıcı Hakları</h2>
+			<p>Avrupa GDPR ve Türk KVKK kapsamında şu haklara sahipsiniz:</p>
+			<ul>
+				<li>Hakkınızda tutulan verileri görme (erişim hakkı)</li>
+				<li>Yanlış verileri düzelttirme (düzeltme hakkı)</li>
+				<li>Verilerinizi silme (unutulma hakkı)</li>
+				<li>İşleme itiraz etme</li>
+			</ul>
+			<p>Bu hakları kullanmak için Discord üzerinden bize ulaşın: <a href="https://discord.gg/K4G3RADfbc" target="_blank" rel="noopener">discord.gg/K4G3RADfbc</a></p>
+
+			<h2>7. Politikada Değişiklikler</h2>
+			<p>
+				Bu gizlilik politikası zaman zaman güncellenebilir. Önemli değişiklikler için site üzerinden
+				bildirim yapılır. Güncel versiyon her zaman bu sayfada bulunur.
+			</p>
+		</article>
+
+		<div class="cluster cluster-center mt-4">
+			<a href="/hakkimizda" class="btn btn-ghost">Hakkımızda</a>
+			<a href="/kullanim-kosullari" class="btn btn-ghost">Kullanım Koşulları</a>
+			<a href="/" class="btn btn-ghost">Ana Sayfa</a>
+		</div>
+	</main>
+
+	<footer class="footer"><div class="container"><span>cscommends.com &copy; 2025 - 2026 Tüm hakları saklıdır.</span></div></footer>
+</div>
+
+	<script src="/js/tawk.js" defer></script>
+	<script src="/js/sale-popup.js?v=4" defer></script>
+</body>
+</html>

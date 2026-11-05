@@ -1,0 +1,37 @@
+{
+	"name": "CS Commends — CS2 Commend, Saat & Grup Üye",
+	"short_name": "CS Commends",
+	"description": "CS2 commend boost, saat pompalama ve Steam grup üye ekleme servisi. 20 ücretsiz commend ile başla.",
+	"start_url": "/",
+	"scope": "/",
+	"display": "standalone",
+	"orientation": "any",
+	"theme_color": "#0e0e15",
+	"background_color": "#0e0e15",
+	"lang": "tr",
+	"dir": "ltr",
+	"categories": ["games", "gaming", "utilities"],
+	"icons": [
+		{ "src": "/logo.jpg", "sizes": "512x512", "type": "image/jpeg", "purpose": "any" },
+		{ "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+		{ "src": "/favicon-32x32.png", "sizes": "32x32", "type": "image/png" },
+		{ "src": "/favicon-16x16.png", "sizes": "16x16", "type": "image/png" }
+	],
+	"shortcuts": [
+		{
+			"name": "20 Ücretsiz Commend",
+			"url": "/free-commend",
+			"description": "Steam profiline 20 ücretsiz CS2 commend al"
+		},
+		{
+			"name": "Saat Boost",
+			"url": "/hours-boost",
+			"description": "CS2 ve diğer oyunlara otomatik saat ekle"
+		},
+		{
+			"name": "Grup Üye",
+			"url": "/group-boost",
+			"description": "Steam grubuna gerçek üyeler ekle"
+		}
+	]
+}

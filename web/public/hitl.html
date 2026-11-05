@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>HITL Helper</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+	--ad-bg: #0a0a0d;
+	--ad-bg-2: #15151c;
+	--ad-bg-3: #1c1c24;
+	--ad-bd-1: #1c1c24;
+	--ad-bd-2: #26262f;
+	--ad-fg-1: #f1f1f5;
+	--ad-fg-2: #b8b8c4;
+	--ad-fg-3: #80808e;
+	--ad-accent: #818cf8;
+	--ad-accent-strong: #6366f1;
+	--ad-accent-hover: #4f46e5;
+	--ad-success: #34d399;
+	--ad-danger: #f87171;
+}
+* { box-sizing: border-box; }
+body {
+	background: var(--ad-bg);
+	color: var(--ad-fg-1);
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	max-width: 900px;
+	margin: 32px auto;
+	padding: 0 24px;
+	font-size: 14px;
+	line-height: 1.55;
+}
+h1 {
+	font-size: 1.4rem;
+	font-weight: 600;
+	letter-spacing: -0.015em;
+	color: var(--ad-fg-1);
+	margin-bottom: 6px;
+}
+.card {
+	background: var(--ad-bg-2);
+	border: 1px solid var(--ad-bd-1);
+	border-radius: 10px;
+	padding: 20px;
+	margin-bottom: 16px;
+}
+.muted { color: var(--ad-fg-3); font-size: 0.82rem; }
+img.captcha {
+	background: #fff;
+	image-rendering: pixelated;
+	transform: scale(3);
+	transform-origin: left top;
+	margin-bottom: 80px;
+	border-radius: 4px;
+}
+input[type=text] {
+	width: 100%;
+	padding: 10px 12px;
+	background: var(--ad-bg-3);
+	border: 1px solid var(--ad-bd-2);
+	border-radius: 6px;
+	color: var(--ad-fg-1);
+	font-size: 0.95rem;
+	font-family: inherit;
+	box-sizing: border-box;
+	outline: none;
+	transition: border-color 0.12s, box-shadow 0.12s;
+}
+input[type=text]:focus {
+	border-color: var(--ad-accent);
+	box-shadow: 0 0 0 3px rgba(129,140,248,0.25);
+}
+button {
+	padding: 8px 16px;
+	background: var(--ad-accent-strong);
+	color: #fff;
+	border: 1px solid var(--ad-accent-strong);
+	border-radius: 6px;
+	font-weight: 500;
+	font-size: 0.85rem;
+	font-family: inherit;
+	cursor: pointer;
+	margin-top: 12px;
+	transition: background 0.12s, border-color 0.12s;
+}
+button:hover { background: var(--ad-accent-hover); border-color: var(--ad-accent-hover); }
+button:disabled { opacity: 0.45; cursor: wait; }
+button.cancel {
+	background: var(--ad-bg-3);
+	color: var(--ad-fg-1);
+	border-color: var(--ad-bd-2);
+	margin-left: 8px;
+}
+button.cancel:hover { background: #23232c; border-color: #353541; }
+.empty { text-align: center; color: var(--ad-fg-3); padding: 48px; }
+.token-input {
+	margin-bottom: 20px;
+	padding: 12px 14px;
+	background: var(--ad-bg-3);
+	border: 1px solid var(--ad-bd-2);
+	border-left: 2px solid var(--ad-accent);
+	border-radius: 0 6px 6px 0;
+	font-size: 0.85rem;
+}
+.error { color: var(--ad-danger); margin-top: 8px; font-size: 0.82rem; }
+.success { color: var(--ad-success); margin-top: 8px; font-size: 0.82rem; }
+code { font-family: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace; font-size: 0.85em; color: var(--ad-fg-2); }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-thumb { background: var(--ad-bd-2); border-radius: 4px; }
+</style>
+<script src="/js/csrf-helper.js"></script>
+</head>
+<body>
+<h1>🚨 HITL Helper</h1>
+<p class="muted">Bekleyen captcha/SMS challenge'larını çöz. localStorage <code>adminToken</code> kullanır. Sayfa 5sn'de bir yenilenir.</p>
+
+<div class="token-input" id="tokenStatus">Token kontrol ediliyor...</div>
+
+<div id="list">
+  <div class="empty">Yükleniyor...</div>
+</div>
+
+<script>
+const $ = sel => document.querySelector(sel);
+const $$ = sel => document.querySelectorAll(sel);
+let lastIds = '';
+
+function getToken() { return localStorage.getItem('adminToken') || ''; }
+
+async function api(path, opts = {}) {
+  const tok = getToken();
+  if (!tok) throw new Error('NO_TOKEN');
+  const headers = Object.assign({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tok }, opts.headers || {});
+  const r = await fetch(path, Object.assign({}, opts, { headers }));
+  if (r.status === 401) throw new Error('UNAUTHORIZED');
+  return r;
+}
+
+async function loginAdmin(password) {
+  const r = await fetch('/api/auth/admin', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password})});
+  const d = await r.json();
+  if (d.token) {
+    localStorage.setItem('adminToken', d.token);
+    return true;
+  }
+  return false;
+}
+
+async function refresh() {
+  const tok = getToken();
+  if (!tok) {
+    $('#tokenStatus').innerHTML = `❌ Token yok. <input type="password" id="pw" placeholder="adminPassword"> <button onclick="doLogin()">Login</button>`;
+    $('#list').innerHTML = '';
+    return;
+  }
+  $('#tokenStatus').textContent = '✓ Token aktif (' + tok.slice(0,20) + '...)';
+
+  try {
+    const r = await api('/api/hitl/admin/pending');
+    const d = await r.json();
+    const items = d.items || [];
+    const ids = items.map(p => p.id).join(',');
+    if (ids === lastIds) return;
+    lastIds = ids;
+
+    if (items.length === 0) {
+      $('#list').innerHTML = '<div class="empty">✓ Bekleyen challenge yok</div>';
+      return;
+    }
+
+    $('#list').innerHTML = items.map(p => `
+      <div class="card" data-id="${p.id}">
+        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:10px;">
+          <div>
+            <strong>#${p.id}</strong> · <span class="muted">${p.type} · ${p.source}</span><br>
+            <small class="muted">${p.created_at} → expires ${p.expires_at}</small>
+          </div>
+          <button class="cancel" onclick="doCancel(${p.id})">İptal</button>
+        </div>
+        <div style="margin:8px 0;">${p.prompt || ''}</div>
+        ${p.screenshot_path ? `<div style="overflow:hidden;width:fit-content;"><img class="captcha" src="${p.screenshot_path}?token=${encodeURIComponent(tok)}"></div>` : ''}
+        <div style="margin-top:15px;">
+          <input type="text" id="ans-${p.id}" placeholder="Cevap (kod)" autocomplete="off" autofocus>
+          <button onclick="doResolve(${p.id})">Gönder</button>
+          <div id="msg-${p.id}"></div>
+        </div>
+      </div>
+    `).join('');
+    const firstInput = document.querySelector('input[type=text][id^=ans-]');
+    if (firstInput) firstInput.focus();
+  } catch (err) {
+    if (err.message === 'UNAUTHORIZED') {
+      localStorage.removeItem('adminToken');
+      lastIds = '';
+      refresh();
+    } else if (err.message === 'NO_TOKEN') {
+    } else {
+      $('#list').innerHTML = '<div class="error">Hata: ' + err.message + '</div>';
+    }
+  }
+}
+
+async function doLogin() {
+  const pw = $('#pw').value;
+  if (!pw) return;
+  const ok = await loginAdmin(pw);
+  if (ok) { lastIds = ''; refresh(); }
+  else $('#tokenStatus').innerHTML += ' <span class="error">Şifre yanlış</span>';
+}
+
+async function doResolve(id) {
+  const ans = document.getElementById('ans-' + id).value.trim();
+  if (!ans) return;
+  const msg = document.getElementById('msg-' + id);
+  msg.className = 'muted';
+  msg.textContent = 'Gönderiliyor...';
+  try {
+    const r = await api('/api/hitl/admin/resolve/' + id, { method:'POST', body:JSON.stringify({answer: ans}) });
+    const d = await r.json();
+    if (d.success) {
+      msg.className = 'success';
+      msg.textContent = '✓ Cevaplandı';
+      lastIds = '';
+      setTimeout(refresh, 600);
+    } else {
+      msg.className = 'error';
+      msg.textContent = 'Hata: ' + (d.error || 'unknown');
+    }
+  } catch (err) {
+    msg.className = 'error';
+    msg.textContent = 'Hata: ' + err.message;
+  }
+}
+
+async function doCancel(id) {
+  if (!confirm('İptal edilsin mi?')) return;
+  try {
+    await api('/api/hitl/admin/cancel/' + id, { method:'POST' });
+    lastIds = '';
+    refresh();
+  } catch (err) {
+    alert('Hata: ' + err.message);
+  }
+}
+
+document.addEventListener('keypress', e => {
+  if (e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.id.startsWith('ans-')) {
+    const id = e.target.id.split('-')[1];
+    doResolve(id);
+  } else if (e.key === 'Enter' && e.target.id === 'pw') {
+    doLogin();
+  }
+});
+
+refresh();
+setInterval(refresh, 5000);
+</script>
+</body>
+</html>

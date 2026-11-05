@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Bayi Paneli · CS Commends</title>
+	<meta name="robots" content="noindex, nofollow">
+	<meta name="theme-color" content="#0e0e15">
+	<link rel="icon" type="image/jpeg" href="/logo.jpg">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/theme.css">
+
+	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/theme-toc.css?v=1">
+
+	<style>
+		body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+		.wrap { min-height: 100vh; display: flex; flex-direction: column; }
+
+		.tabs { display: flex; gap: 0.25rem; border-bottom: 1px solid var(--bd-1); margin-bottom: 1.5rem; overflow-x: auto; }
+		.tab { padding: 0.7rem 1rem; background: transparent; border: none; color: var(--fg-3); font: inherit; font-size: 0.88rem; font-weight: 600; cursor: pointer; position: relative; white-space: nowrap; transition: color var(--t-fast); }
+		.tab:hover { color: var(--fg-1); }
+		.tab.active { color: var(--fg-1); }
+		.tab.active::after { content: ''; position: absolute; left: 0.5rem; right: 0.5rem; bottom: -1px; height: 2px; background: var(--brand); border-radius: 2px 2px 0 0; }
+
+		.limit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+		.limit-card {
+			padding: 1.25rem;
+			background: var(--bg-2);
+			border: 1px solid var(--bd-1);
+			border-radius: var(--r-lg);
+		}
+		.limit-card[data-type="commend"] { border-left: 3px solid var(--brand); }
+		.limit-card[data-type="hours"] { border-left: 3px solid #fb923c; }
+		.limit-card[data-type="group"] { border-left: 3px solid #8b93ff; }
+		.limit-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem; }
+		.limit-label { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--fg-3); font-weight: 700; }
+		.limit-used { font-size: 1.7rem; font-weight: 900; color: var(--fg-1); letter-spacing: -0.02em; line-height: 1; }
+		.limit-cap { color: var(--fg-4); font-size: 0.82rem; margin-left: 0.25rem; }
+		.limit-meta { font-size: 0.78rem; color: var(--fg-3); margin-top: 0.45rem; display: flex; justify-content: space-between; }
+
+		.progress-bar { height: 8px; background: var(--bg-3); border-radius: var(--r-full); overflow: hidden; margin-top: 0.4rem; }
+		.progress-bar > div { height: 100%; border-radius: var(--r-full); transition: width 0.6s cubic-bezier(.4,0,.2,1); }
+		.progress-bar.commend > div { background: linear-gradient(90deg, var(--brand), var(--brand-2)); }
+		.progress-bar.hours > div { background: linear-gradient(90deg, #fb923c, #f97316); }
+		.progress-bar.group > div { background: linear-gradient(90deg, #8b93ff, #6366f1); }
+
+		.tbl { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+		.tbl th { text-align: left; padding: 0.55rem 0.75rem; color: var(--fg-3); font-weight: 600; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--bd-1); }
+		.tbl td { padding: 0.7rem 0.75rem; border-bottom: 1px solid var(--bd-1); color: var(--fg-2); }
+		.tbl tr:last-child td { border-bottom: none; }
+
+		.code-mono { font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; color: var(--fg-1); font-weight: 600; }
+
+		.pkg-option {
+			padding: 0.9rem 0.7rem; background: var(--bg-3); border: 1px solid var(--bd-2); border-radius: var(--r-md);
+			cursor: pointer; transition: all var(--t-fast); text-align: center;
+		}
+		.pkg-option:hover { border-color: var(--brand); transform: translateY(-2px); }
+		.pkg-option.active { border-color: var(--brand); background: var(--brand-soft); }
+
+		.gen-result { background: var(--bg-0); border: 1px solid var(--bd-2); border-radius: var(--r-md); padding: 0.85rem; margin-top: 1rem; }
+		.gen-result .codes-area {
+			font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+			font-size: 0.82rem; color: var(--fg-1);
+			max-height: 200px; overflow-y: auto; white-space: pre;
+			padding: 0.5rem; background: var(--bg-1); border-radius: var(--r-sm);
+		}
+
+		.pager { display: flex; gap: 0.25rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+		.pager button {
+			padding: 0.35rem 0.65rem; background: var(--bg-3); border: 1px solid var(--bd-2);
+			color: var(--fg-2); border-radius: var(--r-sm); font-size: 0.8rem; font-weight: 600; cursor: pointer;
+			transition: all var(--t-fast);
+		}
+		.pager button:hover { border-color: var(--bd-3); color: var(--fg-1); }
+		.pager button.active { background: var(--brand); border-color: var(--brand); color: #fff; }
+
+		.tier-badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: var(--r-full); font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+		.tier-standard { background: var(--bg-3); color: var(--fg-2); }
+		.tier-bronze { background: rgba(205,127,50,0.15); color: #cd7f32; }
+		.tier-silver { background: rgba(192,192,192,0.15); color: #c0c0c0; }
+		.tier-gold { background: rgba(255,215,0,0.15); color: #ffd700; }
+		.tier-platinum { background: var(--info-soft); color: var(--info); }
+	</style>
+<script src="/js/csrf-helper.js"></script>
+</head>
+<body>
+
+<div class="wrap">
+
+	<header class="nav">
+		<div class="container">
+			<div class="nav-inner">
+				<a href="/reseller" class="nav-brand">
+					<img src="/logo.jpg" alt="CS Commends" width="40" height="40">
+					<span>CS Commends · <span style="color: var(--info);">Bayi</span></span>
+				</a>
+
+				<button class="nav-toggle" id="navToggle" aria-label="Menu">
+					<svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+				</button>
+
+				<nav class="nav-actions" id="navActions">
+					<span class="pill pill-neutral" id="resellerIdent" style="font-size: 0.74rem;">-</span>
+					<div class="lang-switch">
+						<button data-lang-switch="tr" aria-label="Türkçe seç">TR</button>
+						<button data-lang-switch="en" aria-label="Select English">EN</button>
+						<button data-lang-switch="de" aria-label="Deutsch wählen" title="Deutsch">DE</button>
+						<button data-lang-switch="ru" aria-label="Выбрать русский" title="Русский">RU</button>
+						<button data-lang-switch="pt" aria-label="Selecionar português" title="Português">PT</button>
+						<button data-lang-switch="es" aria-label="Seleccionar español" title="Español">ES</button>
+						<button data-lang-switch="fr" aria-label="Sélectionner le français" title="Français">FR</button>
+						<button data-lang-switch="pl" aria-label="Wybierz polski" title="Polski">PL</button>
+					</div>
+					<button id="logoutBtn" class="btn btn-ghost btn-sm">Çıkış</button>
+				</nav>
+			</div>
+		</div>
+	</header>
+
+	<main class="page-main container" style="padding-top: 1.5rem; padding-bottom: 3rem;">
+
+		<div class="tabs">
+			<button class="tab active" data-tab="overview">Genel Bakış</button>
+			<button class="tab" data-tab="generate">Kod Üret</button>
+			<button class="tab" data-tab="codes">Kodlarım</button>
+			<button class="tab" data-tab="audit">İşlem Geçmişi</button>
+		</div>
+
+		<section class="tab-panel" data-panel="overview">
+			<div class="card mb-3" style="background: linear-gradient(135deg, var(--bg-2), var(--bg-3));">
+				<div class="cluster cluster-between" style="flex-wrap: wrap; gap: 1rem;">
+					<div>
+						<div class="text-muted fs-sm mb-1">Bayi hesabı</div>
+						<div style="font-size: 1.3rem; font-weight: 800; color: var(--fg-1);" id="welcomeName">-</div>
+						<div class="mt-1"><span class="tier-badge tier-standard" id="tierBadge">Standard</span></div>
+					</div>
+					<div class="text-right">
+						<div class="text-muted fs-sm mb-1">Bu dönem (<span id="overviewPeriod">-</span>)</div>
+						<div style="font-size: 1.1rem; font-weight: 700; color: var(--fg-1);"><span id="overviewTotalCodes">0</span> kod üretildi</div>
+						<div class="text-muted fs-sm mt-1">Toplam yaşam süresi: <span id="overviewLifetimeCodes">0</span></div>
+					</div>
+				</div>
+			</div>
+
+			<h3 class="mb-2">Aylık Limitler</h3>
+			<div class="limit-grid mb-4" id="limitCards"></div>
+
+			<h3 class="mb-2">Son 30 Gün Üretim</h3>
+			<div class="card">
+				<div id="recentChart" style="min-height: 120px;">
+					<div class="empty-state text-muted">Son 30 günde kod üretimi yok.</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="tab-panel hidden" data-panel="generate">
+			<div class="grid grid-2">
+				<div class="card">
+					<h3 class="mb-3">Yeni Kod Üret</h3>
+
+					<label class="label">Ürün Tipi</label>
+					<div id="productTypeTabs" class="cluster mb-3" style="gap: 0.4rem;"></div>
+
+					<label class="label">Adet</label>
+					<input type="number" class="input" id="genCount" min="1" max="100" value="10">
+					<p class="hint">Her seferde 1-100 arası kod üretilebilir.</p>
+
+					<label class="label mt-2">Her Kodun Bakiyesi</label>
+					<div class="pkg-grid mb-2" id="balancePresets"></div>
+					<input type="number" class="input" id="genBalance" min="1" max="100000" placeholder="örn: 300">
+					<p class="hint" id="balanceHint">Her kod için değer (örn: 300 = 300 commend).</p>
+
+					<label class="label mt-2">Son Kullanma Tarihi (Opsiyonel)</label>
+					<input type="datetime-local" class="input" id="genExpires">
+
+					<div class="alert alert-info mt-3" id="limitAlert"></div>
+
+					<button class="btn btn-primary btn-lg btn-block mt-3" id="genBtn">Kod Üret</button>
+					<div class="input-error" id="genErr"></div>
+				</div>
+
+				<div class="card">
+					<h3 class="mb-2">Sonuç</h3>
+					<p class="text-muted fs-sm mb-2">Üretilen kodlar burada görünür. Kopyala ve müşterine ilet.</p>
+					<div id="genResultArea">
+						<div class="empty-state" style="padding: 3rem 1rem;">
+							<svg width="44" height="44" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.3" style="opacity: 0.3;"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M8 10h8M8 14h5"/></svg>
+							<div>Henüz kod üretmedin.</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="tab-panel hidden" data-panel="codes">
+			<div class="card mb-2">
+				<div class="cluster" style="flex-wrap: wrap; gap: 0.75rem;">
+					<div>
+						<label class="label">Durum</label>
+						<select class="select" id="codeFilterStatus" style="min-width: 140px;">
+							<option value="all">Hepsi</option>
+							<option value="unused">Kullanılmayan</option>
+							<option value="used">Kullanılan</option>
+						</select>
+					</div>
+					<div>
+						<label class="label">Ürün Tipi</label>
+						<select class="select" id="codeFilterType" style="min-width: 140px;">
+							<option value="">Hepsi</option>
+							<option value="commend">Commend</option>
+							<option value="hours">Hours</option>
+							<option value="group">Group</option>
+						</select>
+					</div>
+					<div style="flex: 1;"></div>
+					<button class="btn btn-ghost btn-sm" id="codeExportBtn" style="align-self: flex-end;">CSV Dışa Aktar</button>
+				</div>
+			</div>
+
+			<div class="card" style="overflow-x: auto; padding: 0;">
+				<table class="tbl">
+					<thead>
+						<tr>
+							<th>Kod</th>
+							<th>Tip</th>
+							<th>Bakiye</th>
+							<th>Durum</th>
+							<th>Oluşturma</th>
+							<th>Son Kullanma</th>
+						</tr>
+					</thead>
+					<tbody id="codesTableBody">
+						<tr><td colspan="6" class="text-center text-muted" style="padding: 2rem;">Yükleniyor...</td></tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="pager" id="codesPager"></div>
+		</section>
+
+		<section class="tab-panel hidden" data-panel="audit">
+			<div class="card" style="overflow-x: auto; padding: 0;">
+				<table class="tbl">
+					<thead>
+						<tr>
+							<th>Zaman</th>
+							<th>İşlem</th>
+							<th>Detay</th>
+							<th>IP</th>
+						</tr>
+					</thead>
+					<tbody id="auditTableBody">
+						<tr><td colspan="4" class="text-center text-muted" style="padding: 2rem;">Yükleniyor...</td></tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+	</main>
+
+	<footer class="footer">
+		<div class="container">
+			<span>cscommends.com &copy; 2025 - 2026 Bayi Paneli</span>
+		</div>
+	</footer>
+
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="/js/i18n.js?v=3"></script>
+<script>
+(function(){
+	const TOKEN_KEY = 'reseller_token';
+	const getToken = () => localStorage.getItem(TOKEN_KEY);
+	const clearToken = () => localStorage.removeItem(TOKEN_KEY);
+
+	if (!getToken()) { location.href = '/reseller-login'; return; }
+
+	(function(){
+		const t = document.getElementById('navToggle'); const a = document.getElementById('navActions');
+		if (t && a) {
+			t.addEventListener('click', () => a.classList.toggle('open'));
+			document.addEventListener('click', (e) => { if (!a.contains(e.target) && !t.contains(e.target)) a.classList.remove('open'); });
+		}
+	})();
+
+	const toast = (() => {
+		const el = document.getElementById('toast'); let timer;
+		return (msg, kind) => {
+			el.textContent = msg;
+			el.className = 'toast show ' + (kind || '');
+			clearTimeout(timer);
+			timer = setTimeout(() => el.classList.remove('show'), 3500);
+		};
+	})();
+
+	async function api(path, opts = {}) {
+		const headers = { 'Content-Type': 'application/json', ...(opts.headers || {}) };
+		const t = getToken(); if (t) headers.Authorization = 'Bearer ' + t;
+		const r = await fetch(path, { ...opts, headers });
+		let data; try { data = await r.json(); } catch { data = {}; }
+		if (!r.ok) {
+			if (r.status === 401 || r.status === 403 && data.error === 'account_suspended') {
+				clearToken();
+				location.href = '/reseller-login';
+				throw new Error('auth_lost');
+			}
+			const e = new Error(data.error || 'request_failed'); e.status = r.status; e.data = data; throw e;
+		}
+		return data;
+	}
+
+	function escapeHtml(s) {
+		if (s == null) return '';
+		return String(s).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+	}
+
+	function fmtDate(s) {
+		if (!s) return '-';
+		try { return new Date(s + 'Z').toLocaleString('tr-TR'); } catch { return s; }
+	}
+
+	const tabBtns = document.querySelectorAll('.tab');
+	const panels = document.querySelectorAll('.tab-panel');
+	tabBtns.forEach(b => b.addEventListener('click', () => {
+		tabBtns.forEach(x => x.classList.remove('active'));
+		b.classList.add('active');
+		panels.forEach(p => p.classList.add('hidden'));
+		const target = document.querySelector('[data-panel="' + b.dataset.tab + '"]');
+		if (target) target.classList.remove('hidden');
+
+		if (b.dataset.tab === 'codes') loadCodes(1);
+		if (b.dataset.tab === 'audit') loadAudit();
+		if (b.dataset.tab === 'generate') renderGenerate();
+	}));
+
+	let me = null;
+	let selectedType = 'commend';
+	let currentCodePage = 1;
+	let currentCodeFilter = { filter: 'all', productType: '' };
+
+	async function loadOverview() {
+		try {
+			me = await api('/api/reseller/me');
+			const ident = document.getElementById('resellerIdent');
+			ident.textContent = me.displayName || me.username;
+
+			document.getElementById('welcomeName').textContent = me.displayName || me.username;
+			const tb = document.getElementById('tierBadge');
+			tb.textContent = (me.tier || 'standard').charAt(0).toUpperCase() + (me.tier || 'standard').slice(1);
+			tb.className = 'tier-badge tier-' + (me.tier || 'standard');
+			document.getElementById('overviewPeriod').textContent = me.usage && me.usage.period ? me.usage.period : '-';
+
+			const stats = await api('/api/reseller/stats').catch(() => null);
+			document.getElementById('overviewTotalCodes').textContent = (me.usage ? (me.usage.commend + me.usage.hours + me.usage.group) : 0);
+			document.getElementById('overviewLifetimeCodes').textContent = (me.total ? me.total.codes : 0);
+
+			renderLimitCards(me);
+			if (stats) renderRecent(stats.recent || []);
+		} catch (e) {
+			if (e.message === 'auth_lost') return;
+			toast('Yükleme hatası: ' + e.message, 'error');
+		}
+	}
+
+	function renderLimitCards(m) {
+		const wrap = document.getElementById('limitCards');
+		wrap.innerHTML = '';
+		[
+			{ type: 'commend', label: 'Commend', unit: 'commend' },
+			{ type: 'hours', label: 'Hours Boost', unit: 'saat' },
+			{ type: 'group', label: 'Grup Üye', unit: 'üye' }
+		].forEach(({ type, label, unit }) => {
+			const limit = m.limits[type];
+			const used = m.usage[type];
+			const card = document.createElement('div');
+			card.className = 'limit-card';
+			card.setAttribute('data-type', type);
+
+			if (limit === 0) {
+				card.innerHTML = `
+					<div class="limit-head">
+						<span class="limit-label">${label}</span>
+						<span class="pill pill-neutral" style="font-size: 0.62rem;">Yetkili değil</span>
+					</div>
+					<div style="color: var(--fg-4); font-size: 0.85rem;">Bu tip için bayiliğin bulunmuyor.</div>
+				`;
+			} else if (limit === -1) {
+				card.innerHTML = `
+					<div class="limit-head">
+						<span class="limit-label">${label}</span>
+						<span class="pill pill-success" style="font-size: 0.62rem;">Sınırsız</span>
+					</div>
+					<div class="limit-used">${used.toLocaleString('tr')}<span class="limit-cap">${unit}</span></div>
+					<div class="limit-meta"><span>Bu dönem üretilen</span><span>—</span></div>
+				`;
+			} else {
+				const pct = Math.min(100, Math.round((used / limit) * 100));
+				const remaining = Math.max(0, limit - used);
+				card.innerHTML = `
+					<div class="limit-head">
+						<span class="limit-label">${label}</span>
+					</div>
+					<div class="limit-used">${used.toLocaleString('tr')}<span class="limit-cap">/ ${limit.toLocaleString('tr')} ${unit}</span></div>
+					<div class="progress-bar ${type}"><div style="width: ${pct}%"></div></div>
+					<div class="limit-meta">
+						<span>${pct}% kullanıldı</span>
+						<span>${remaining.toLocaleString('tr')} kaldı</span>
+					</div>
+				`;
+			}
+			wrap.appendChild(card);
+		});
+	}
+
+	function renderRecent(recent) {
+		const wrap = document.getElementById('recentChart');
+		if (!recent.length) {
+			wrap.innerHTML = '<div class="empty-state text-muted">Son 30 günde kod üretimi yok.</div>';
+			return;
+		}
+
+		const byDay = {};
+		for (const r of recent) {
+			if (!byDay[r.day]) byDay[r.day] = { commend: 0, hours: 0, group: 0 };
+			byDay[r.day][r.product_type] = r.cnt;
+		}
+		const days = Object.keys(byDay).sort();
+		const rows = days.map(d => {
+			const b = byDay[d];
+			return `<tr><td class="text-muted fs-sm">${d}</td><td>${b.commend||0}</td><td>${b.hours||0}</td><td>${b.group||0}</td><td class="fw-700">${(b.commend||0)+(b.hours||0)+(b.group||0)}</td></tr>`;
+		}).join('');
+		wrap.innerHTML = `
+			<table class="tbl">
+				<thead><tr><th>Gün</th><th>Commend</th><th>Hours</th><th>Group</th><th>Toplam</th></tr></thead>
+				<tbody>${rows}</tbody>
+			</table>
+		`;
+	}
+
+	function renderGenerate() {
+		if (!me) return;
+
+		const availableTypes = [];
+		if (me.limits.commend !== 0) availableTypes.push({ id: 'commend', label: 'Commend', unit: 'commend', color: 'var(--brand)' });
+		if (me.limits.hours !== 0) availableTypes.push({ id: 'hours', label: 'Hours', unit: 'saat', color: '#fb923c' });
+		if (me.limits.group !== 0) availableTypes.push({ id: 'group', label: 'Group', unit: 'üye', color: '#8b93ff' });
+
+		const tabs = document.getElementById('productTypeTabs');
+		if (!availableTypes.length) {
+			tabs.innerHTML = '<div class="alert alert-warning"><span>Herhangi bir ürün tipi için yetkiniz yok. Admin\'e başvurun.</span></div>';
+			document.getElementById('genBtn').disabled = true;
+			return;
+		}
+
+		if (!availableTypes.find(t => t.id === selectedType)) selectedType = availableTypes[0].id;
+
+		tabs.innerHTML = availableTypes.map(t =>
+			'<button type="button" class="btn btn-sm ' + (selectedType === t.id ? 'btn-primary' : 'btn-ghost') + '" data-pt="' + t.id + '" style="' + (selectedType === t.id ? 'background: ' + t.color + ';' : '') + '">' + t.label + '</button>'
+		).join('');
+
+		tabs.querySelectorAll('[data-pt]').forEach(btn => btn.addEventListener('click', () => {
+			selectedType = btn.dataset.pt;
+			renderGenerate();
+		}));
+
+		const presets = {
+			commend: [300, 600, 900, 1500, 3000],
+			hours: [100, 250, 500, 1000, 2000],
+			group: [100, 250, 500, 1000, 2000]
+		};
+		const unit = { commend: 'commend', hours: 'saat', group: 'üye' }[selectedType];
+
+		const grid = document.getElementById('balancePresets');
+		grid.innerHTML = '';
+		presets[selectedType].forEach(p => {
+			const c = document.createElement('div');
+			c.className = 'pkg-option';
+			c.innerHTML = '<div style="font-size:1.2rem; font-weight:800; color:var(--fg-1);">' + p + '</div><div class="text-muted" style="font-size:0.65rem; text-transform:uppercase; letter-spacing:0.05em; margin-top:0.2rem;">' + unit + '</div>';
+			c.onclick = () => {
+				grid.querySelectorAll('.pkg-option').forEach(x => x.classList.remove('active'));
+				c.classList.add('active');
+				document.getElementById('genBalance').value = p;
+			};
+			grid.appendChild(c);
+		});
+
+		document.getElementById('balanceHint').textContent = 'Her kod için değer (' + unit + ').';
+
+		const lim = me.limits[selectedType];
+		const used = me.usage[selectedType];
+		const alert = document.getElementById('limitAlert');
+		if (lim === -1) {
+			alert.className = 'alert alert-success mt-3';
+			alert.innerHTML = '<svg class="alert-icon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="7 12 10 15 17 8" stroke="#0a0" stroke-width="2" fill="none"/></svg><span>Bu ürün tipi için <strong>sınırsız</strong> üretim hakkına sahipsin.</span>';
+		} else {
+			const remaining = Math.max(0, lim - used);
+			alert.className = 'alert alert-info mt-3';
+			alert.innerHTML = '<svg class="alert-icon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg><span>Bu dönemde <strong>' + used.toLocaleString('tr') + ' / ' + lim.toLocaleString('tr') + '</strong> ' + unit + ' kullandın. <strong>' + remaining.toLocaleString('tr') + ' ' + unit + '</strong> hakkın kaldı.</span>';
+		}
+	}
+
+	document.getElementById('genBtn').addEventListener('click', async () => {
+		const err = document.getElementById('genErr');
+		err.classList.remove('show');
+
+		const count = parseInt(document.getElementById('genCount').value, 10);
+		const balance = parseInt(document.getElementById('genBalance').value, 10);
+		const expiresAt = document.getElementById('genExpires').value;
+
+		if (!count || count < 1 || count > 100) { err.textContent = 'Adet 1-100 arası olmalı.'; err.classList.add('show'); return; }
+		if (!balance || balance < 1) { err.textContent = 'Bakiye gir.'; err.classList.add('show'); return; }
+
+		const btn = document.getElementById('genBtn');
+		btn.disabled = true;
+		const orig = btn.innerHTML;
+		btn.innerHTML = '<span class="spinner"></span><span>Üretiliyor...</span>';
+
+		try {
+			const r = await api('/api/reseller/codes/generate', {
+				method: 'POST',
+				body: JSON.stringify({ count, balance, productType: selectedType, expiresAt: expiresAt || null })
+			});
+
+			me.usage = r.usage;
+			renderLimitCards(me);
+			renderGenerate();
+
+			const area = document.getElementById('genResultArea');
+			const codesList = r.codes.map(c => c.code).join('\n');
+			area.innerHTML = `
+				<div class="alert alert-success mb-2"><svg class="alert-icon" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2" fill="none"/></svg><span><strong>${r.generated}</strong> kod üretildi · toplam <strong>${r.generated * balance}</strong> ${({commend:'commend',hours:'saat',group:'üye'})[selectedType]}</span></div>
+				<div class="gen-result">
+					<div class="cluster cluster-between mb-1">
+						<span class="fw-700">Kodlar</span>
+						<div class="cluster">
+							<button class="btn btn-secondary btn-sm" id="copyCodesBtn">Kopyala</button>
+							<button class="btn btn-ghost btn-sm" id="downloadCodesBtn">İndir</button>
+						</div>
+					</div>
+					<div class="codes-area" id="codesArea">${escapeHtml(codesList)}</div>
+				</div>
+			`;
+			document.getElementById('copyCodesBtn').onclick = () => {
+				navigator.clipboard.writeText(codesList).then(() => toast('Kodlar kopyalandı', 'success'));
+			};
+			document.getElementById('downloadCodesBtn').onclick = () => {
+				const blob = new Blob([codesList], { type: 'text/plain;charset=utf-8' });
+				const url = URL.createObjectURL(blob);
+				const a = document.createElement('a');
+				a.href = url; a.download = 'kodlar-' + selectedType + '-' + Date.now() + '.txt'; a.click();
+				URL.revokeObjectURL(url);
+			};
+
+			toast(r.generated + ' kod üretildi', 'success');
+		} catch (ex) {
+			const m = ex.data && ex.data.error;
+			const map = {
+				product_not_permitted: 'Bu ürün tipi için yetkin yok.',
+				limit_exceeded: 'Aylık limitin aşıldı. Kalan: ' + (ex.data && ex.data.remaining) + ' ' + selectedType,
+				invalid_count: 'Adet geçersiz (1-100).',
+				invalid_balance: 'Bakiye geçersiz (1-100000).',
+				invalid_product_type: 'Ürün tipi geçersiz.'
+			};
+			err.textContent = map[m] || ex.message || 'Hata oluştu.';
+			err.classList.add('show');
+		} finally {
+			btn.disabled = false;
+			btn.innerHTML = orig;
+		}
+	});
+
+	async function loadCodes(page) {
+		currentCodePage = page;
+		const tbody = document.getElementById('codesTableBody');
+		tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted" style="padding: 2rem;">Yükleniyor...</td></tr>';
+
+		const params = new URLSearchParams({ page, limit: 25 });
+		if (currentCodeFilter.filter !== 'all') params.set('filter', currentCodeFilter.filter);
+		if (currentCodeFilter.productType) params.set('productType', currentCodeFilter.productType);
+
+		try {
+			const d = await api('/api/reseller/codes?' + params);
+			if (!d.codes.length) {
+				tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted" style="padding: 2rem;">Kod bulunamadı.</td></tr>';
+				document.getElementById('codesPager').innerHTML = '';
+				return;
+			}
+			const typeStyle = {
+				commend: { label: 'Commend', cls: 'pill-brand' },
+				hours: { label: 'Hours', cls: 'pill-warning' },
+				group: { label: 'Group', cls: 'pill-info' }
+			};
+			const unitLbl = { commend: 'commend', hours: 'saat', group: 'üye' };
+			tbody.innerHTML = d.codes.map(c => {
+				const t = typeStyle[c.productType] || typeStyle.commend;
+				const unit = unitLbl[c.productType] || '';
+				const statusPill = c.isUsed
+					? '<span class="pill pill-neutral">Kullanıldı</span>'
+					: '<span class="pill pill-success">Kullanılmadı</span>';
+				return '<tr>' +
+					'<td><span class="code-mono">' + escapeHtml(c.code) + '</span></td>' +
+					'<td><span class="pill ' + t.cls + '">' + t.label + '</span></td>' +
+					'<td>' + c.initialBalance + ' <span class="text-muted fs-sm">' + unit + '</span></td>' +
+					'<td>' + statusPill + '</td>' +
+					'<td class="text-muted fs-sm">' + fmtDate(c.createdAt) + '</td>' +
+					'<td class="text-muted fs-sm">' + (c.expiresAt ? fmtDate(c.expiresAt) : '—') + '</td>' +
+				'</tr>';
+			}).join('');
+
+			const pager = document.getElementById('codesPager');
+			if (d.totalPages > 1) {
+				let html = '';
+				for (let i = 1; i <= d.totalPages; i++) {
+					html += '<button class="' + (i === d.page ? 'active' : '') + '" data-page="' + i + '">' + i + '</button>';
+				}
+				pager.innerHTML = html;
+				pager.querySelectorAll('[data-page]').forEach(b => b.addEventListener('click', (e) => loadCodes(parseInt(e.currentTarget.dataset.page))));
+			} else {
+				pager.innerHTML = '';
+			}
+		} catch (ex) {
+			tbody.innerHTML = '<tr><td colspan="6" class="text-center text-danger" style="padding: 2rem;">Hata: ' + escapeHtml(ex.message) + '</td></tr>';
+		}
+	}
+
+	document.getElementById('codeFilterStatus').addEventListener('change', (e) => {
+		currentCodeFilter.filter = e.target.value;
+		loadCodes(1);
+	});
+	document.getElementById('codeFilterType').addEventListener('change', (e) => {
+		currentCodeFilter.productType = e.target.value;
+		loadCodes(1);
+	});
+
+	document.getElementById('codeExportBtn').addEventListener('click', async () => {
+		try {
+			const all = [];
+			let page = 1;
+			while (true) {
+				const d = await api('/api/reseller/codes?page=' + page + '&limit=100');
+				all.push(...d.codes);
+				if (page >= (d.totalPages || 1)) break;
+				page++;
+			}
+			const header = 'code,productType,balance,isUsed,createdAt,expiresAt';
+			const rows = all.map(c => [c.code, c.productType, c.initialBalance, c.isUsed ? 'yes' : 'no', c.createdAt, c.expiresAt || ''].join(','));
+			const csv = [header, ...rows].join('\n');
+			const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement('a');
+			a.href = url; a.download = 'bayi-kodlar-' + Date.now() + '.csv'; a.click();
+			URL.revokeObjectURL(url);
+			toast('CSV indirildi', 'success');
+		} catch (e) { toast('İndirme hatası: ' + e.message, 'error'); }
+	});
+
+	async function loadAudit() {
+		const tbody = document.getElementById('auditTableBody');
+		tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted" style="padding: 2rem;">Yükleniyor...</td></tr>';
+		try {
+			const d = await api('/api/reseller/audit?limit=100');
+			if (!d.audit.length) {
+				tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted" style="padding: 2rem;">Henüz işlem yok.</td></tr>';
+				return;
+			}
+			const labels = {
+				login_success: 'Giriş başarılı',
+				login_failed: 'Giriş başarısız',
+				logout: 'Çıkış',
+				codes_generated: 'Kod üretildi'
+			};
+			tbody.innerHTML = d.audit.map(a => {
+				let det = '';
+				if (a.details) {
+					try {
+						const j = JSON.parse(a.details);
+						if (a.action === 'codes_generated') det = j.productType + ' · ' + j.count + ' kod · ' + j.totalUnits + ' birim';
+						else det = Object.entries(j).slice(0, 3).map(([k,v]) => k + ':' + v).join(' · ');
+					} catch {}
+				}
+				return '<tr>' +
+					'<td class="text-muted fs-sm">' + fmtDate(a.created_at) + '</td>' +
+					'<td class="fw-600">' + (labels[a.action] || a.action) + '</td>' +
+					'<td class="text-muted fs-sm">' + escapeHtml(det || '—') + '</td>' +
+					'<td class="text-muted fs-sm">' + escapeHtml(a.ip || '—') + '</td>' +
+				'</tr>';
+			}).join('');
+		} catch (ex) {
+			tbody.innerHTML = '<tr><td colspan="4" class="text-center text-danger" style="padding: 2rem;">Hata: ' + escapeHtml(ex.message) + '</td></tr>';
+		}
+	}
+
+	document.getElementById('logoutBtn').addEventListener('click', async () => {
+		try { await api('/api/reseller/logout', { method: 'POST' }); } catch {}
+		clearToken();
+		location.href = '/reseller-login';
+	});
+
+	loadOverview();
+})();
+</script>
+
+	<script src="/js/tawk.js" defer></script>
+	<script src="/js/sale-popup.js?v=4" defer></script>
+</body>
+</html>

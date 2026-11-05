@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/0.9">
+
+	<url>
+		<loc>https://cscommends.com/</loc>
+		<image:image>
+			<image:loc>https://cscommends.com/logo.jpg</image:loc>
+			<image:title>CS Commends — CS2 Commend Boost, Saat Pompalama, Steam Grup Üye</image:title>
+			<image:caption>Türkiye'nin önde gelen CS2 commend boost servisi</image:caption>
+		</image:image>
+		<image:image>
+			<image:loc>https://cscommends.com/icon-192.png</image:loc>
+			<image:title>CS Commends Logo</image:title>
+		</image:image>
+		<image:image>
+			<image:loc>https://cscommends.com/apple-touch-icon.png</image:loc>
+			<image:title>CS Commends App Icon</image:title>
+		</image:image>
+	</url>
+
+	<url>
+		<loc>https://cscommends.com/free-commend</loc>
+		<image:image>
+			<image:loc>https://cscommends.com/logo.jpg</image:loc>
+			<image:title>20 Ücretsiz CS2 Commend — Bedava Övgü</image:title>
+			<image:caption>Kayıt yok, ödeme yok, anında teslim 20 ücretsiz commend</image:caption>
+		</image:image>
+	</url>
+
+	<url>
+		<loc>https://cscommends.com/hours-boost</loc>
+		<image:image>
+			<image:loc>https://cscommends.com/logo.jpg</image:loc>
+			<image:title>CS2 Saat Pompalama — Hours Boost Service</image:title>
+			<image:caption>Trust Factor, FACEIT 250 saat, Premier rating için saat</image:caption>
+		</image:image>
+	</url>
+
+	<url>
+		<loc>https://cscommends.com/group-boost</loc>
+		<image:image>
+			<image:loc>https://cscommends.com/logo.jpg</image:loc>
+			<image:title>Steam Grup Üyesi Ekleme — Group Members Boost</image:title>
+			<image:caption>Streamer ve YouTuber'lar için Steam grubuna üye ekleme</image:caption>
+		</image:image>
+	</url>
+
+	<url>
+		<loc>https://cscommends.com/blog</loc>
+		<image:image>
+			<image:loc>https://cscommends.com/logo.jpg</image:loc>
+			<image:title>CS2 Rehberleri &amp; Blog</image:title>
+		</image:image>
+	</url>
+
+</urlset>

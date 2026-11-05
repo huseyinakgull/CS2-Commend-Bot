@@ -1,0 +1,100 @@
+{
+  "name": "CS Commends — CS2 Asset Library",
+  "version": "1.0.0",
+  "createdAt": "2026-05-09",
+  "totalFiles": 289,
+  "totalSizeMB": 21,
+  "categories": {
+    "logos": {
+      "path": "/assets/cs2/logos/",
+      "count": 8,
+      "sizeKB": 484,
+      "files": [
+        { "name": "cs2-official-logo.svg", "purpose": "Header logo (renkli, vektör)" },
+        { "name": "cs2-logo-orange.png", "purpose": "1024x500 PNG, dark backgrounds" },
+        { "name": "cs2-orange-bg.svg", "purpose": "Orange gradient background SVG" },
+        { "name": "cs2-steam-logo.png", "purpose": "Steam'in resmi CS2 transparent PNG (39KB)" },
+        { "name": "cs2-steam-header.jpg", "purpose": "Steam store header banner" },
+        { "name": "cs2-steam-library-hero.jpg", "purpose": "Geniş 1920x620 hero (en kaliteli)" },
+        { "name": "cs2-steam-library-600x900.jpg", "purpose": "Vertical poster" },
+        { "name": "cs2-steam-capsule-616x353.jpg", "purpose": "Card capsule (orta boy)" }
+      ]
+    },
+    "weapons": {
+      "path": "/assets/cs2/weapons/",
+      "count": 100,
+      "sizeKB": 1024,
+      "format": "SVG (game files)",
+      "examples": ["ak47.svg", "awp.svg", "m4a4.svg", "deagle.svg", "usp_silencer.svg", "glock18.svg", "knife_butterfly.svg", "c4.svg", "decoy.svg", "flashbang.svg"]
+    },
+    "icons/ranks": {
+      "path": "/assets/cs2/icons/ranks/",
+      "count": 61,
+      "purpose": "Skill group rozetleri (0-18 skillgroup + 0-15 dangerzone) — bayilik tier rozetleri için ideal"
+    },
+    "icons/radar": {
+      "path": "/assets/cs2/icons/radar/",
+      "count": 3,
+      "files": ["radarctlogo.svg (CT mavi)", "radartlogo.svg (T turuncu)", "icon_direction_indicator.svg"]
+    },
+    "characters": {
+      "path": "/assets/cs2/characters/",
+      "count": 3,
+      "files": [
+        { "name": "local_agent_ct.svg", "purpose": "CT silüeti (mavi)" },
+        { "name": "local_agent_t.svg", "purpose": "T silüeti (turuncu)" },
+        { "name": "cs-agent-transparent.png", "purpose": "StickPNG agent karakter PNG" }
+      ]
+    },
+    "maps/cs2": {
+      "path": "/assets/cs2/maps/cs2/",
+      "count": 46,
+      "format": "PNG",
+      "examples": ["de_dust2.png", "de_inferno.png", "de_mirage.png", "de_overpass.png", "cs_office.png", "ar_baggage.png"]
+    },
+    "maps/csgo-svg": {
+      "path": "/assets/cs2/maps/csgo-svg/",
+      "count": 52,
+      "format": "SVG (lightweight)"
+    },
+    "backgrounds": {
+      "path": "/assets/cs2/backgrounds/",
+      "count": 12,
+      "examples": [
+        { "name": "csgo_camo.svg", "purpose": "Tile-able camouflage pattern (section background)" },
+        { "name": "circle_background.svg", "purpose": "Decorative circle pattern" },
+        { "name": "dots.svg", "purpose": "Dot pattern (subtle)" },
+        { "name": "premier-rankup-bg.svg", "purpose": "Premier rank-up gradient" },
+        { "name": "wedge_edges.svg", "purpose": "Geometric wedge pattern" },
+        { "name": "xray_bars.svg", "purpose": "Yatay xray bar pattern" }
+      ]
+    },
+    "wallpapers": {
+      "path": "/assets/cs2/wallpapers/",
+      "count": 1,
+      "files": ["cs2-hero-1920x620.jpg (Steam library hero, geniş)"]
+    },
+    "ui": {
+      "path": "/assets/cs2/ui/",
+      "count": 2,
+      "files": ["badge-ct.svg (mavi CT rozeti)", "badge-t.svg (turuncu T rozeti)"]
+    }
+  },
+  "designRecommendations": {
+    "primaryHero": "/assets/cs2/wallpapers/cs2-hero-1920x620.jpg + /assets/cs2/logos/cs2-steam-logo.png overlay",
+    "loginPage": "/assets/cs2/backgrounds/csgo_camo.svg + brand color overlay",
+    "tierBadges": "/assets/cs2/icons/ranks/skillgroup{1,7,12,18}.svg (Bronze/Silver/Gold/Platinum)",
+    "serviceCardIcons": "/assets/cs2/weapons/ + /assets/cs2/ui/badge-ct.svg + skill group ranks",
+    "footerWatermark": "/assets/cs2/backgrounds/dots.svg veya csgo_camo.svg (5% opacity)"
+  },
+  "license": {
+    "valveAssets": "Valve Corporation (CS2/CSGO branding) — fair use for service promotion",
+    "communityRepos": [
+      "https://github.com/Juknum/counter-strike-icons",
+      "https://github.com/MurkyYT/cs2-map-icons",
+      "https://github.com/vgalisson/csgo-map-icons"
+    ],
+    "wikimedia": "Creative Commons (Counter-Strike 2 logos category)",
+    "stickPNG": "Free for personal/non-commercial use"
+  }
+}

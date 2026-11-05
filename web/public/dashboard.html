@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Panel · CS Commends</title>
+	<meta name="robots" content="noindex, follow">
+	<meta name="theme-color" content="#0e0e15">
+	<link rel="icon" type="image/jpeg" href="/logo.jpg">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/theme.css">
+
+	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/theme-toc.css?v=1">
+
+	<style>
+		body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+		.wrap { min-height: 100vh; display: flex; flex-direction: column; }
+
+		.type-chip {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.45rem;
+			padding: 0.55rem 0.85rem;
+			background: var(--bg-3);
+			border: 1px solid var(--bd-2);
+			border-radius: var(--r-md);
+			font-size: 0.82rem;
+			font-weight: 600;
+			cursor: pointer;
+			user-select: none;
+			transition: all var(--t-fast);
+			color: var(--fg-2);
+		}
+		.type-chip:hover { border-color: var(--bd-3); color: var(--fg-1); }
+		.type-chip input { display: none; }
+		.type-chip.checked { background: var(--brand-soft); border-color: var(--brand); color: var(--fg-1); }
+		.type-chip .chk {
+			width: 16px; height: 16px; border-radius: 4px;
+			border: 1.5px solid var(--bd-3);
+			display: inline-flex; align-items: center; justify-content: center;
+			transition: all var(--t-fast);
+		}
+		.type-chip.checked .chk { background: var(--brand); border-color: var(--brand); }
+		.type-chip .chk svg { opacity: 0; }
+		.type-chip.checked .chk svg { opacity: 1; }
+
+		.profile-preview {
+			display: none;
+			gap: 0.75rem;
+			align-items: center;
+			padding: 0.8rem;
+			background: var(--bg-3);
+			border: 1px solid var(--bd-2);
+			border-radius: var(--r-md);
+			margin-top: 0.5rem;
+		}
+		.profile-preview.show { display: flex; }
+		.profile-preview .avatar {
+			width: 42px; height: 42px; border-radius: var(--r-sm); flex-shrink: 0;
+			background: var(--bg-0); display: flex; align-items: center; justify-content: center;
+			color: var(--brand); overflow: hidden;
+		}
+		.profile-preview .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+		.server-card {
+			background: var(--bg-3);
+			border: 1px solid var(--bd-2);
+			border-radius: var(--r-md);
+			padding: 0.9rem;
+		}
+		.server-card code {
+			flex: 1;
+			background: var(--bg-0);
+			padding: 0.5rem 0.65rem;
+			border-radius: var(--r-sm);
+			font-size: 0.77rem;
+			color: var(--fg-1);
+			word-break: break-all;
+			min-width: 0;
+			display: block;
+		}
+
+		.statusbar {
+			display: flex;
+			align-items: center;
+			gap: 0.75rem;
+			padding: 0.9rem 1.15rem;
+			background: var(--bg-2);
+			border: 1px solid var(--bd-1);
+			border-radius: var(--r-lg);
+			flex-wrap: wrap;
+		}
+		.statusbar .st-left { display: flex; align-items: center; gap: 0.5rem; }
+		.statusbar .st-right { display: flex; align-items: center; gap: 0.9rem; margin-left: auto; font-size: 0.78rem; color: var(--fg-3); flex-wrap: wrap; }
+
+		.tx-item {
+			background: var(--bg-3);
+			border: 1px solid var(--bd-2);
+			border-radius: var(--r-md);
+			padding: 0.95rem 1.05rem;
+		}
+
+		.tx-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+		.tx-table th {
+			text-align: left;
+			padding: 0.6rem 0.85rem;
+			color: var(--fg-3);
+			font-weight: 600;
+			font-size: 0.72rem;
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			border-bottom: 1px solid var(--bd-1);
+		}
+		.tx-table td {
+			padding: 0.75rem 0.85rem;
+			border-bottom: 1px solid var(--bd-1);
+			color: var(--fg-2);
+		}
+		.tx-table tr { cursor: pointer; transition: background var(--t-fast); }
+		.tx-table tr:hover { background: var(--bg-3); }
+		.tx-table tr:last-child td { border-bottom: none; }
+
+		@media (max-width: 640px) {
+			.tx-table .mobile-hidden { display: none; }
+		}
+
+		.shimmer {
+			background: linear-gradient(90deg, var(--brand) 0%, var(--brand-2) 50%, var(--brand) 100%);
+			background-size: 200% 100%;
+			animation: shimmer 2s linear infinite;
+		}
+		@keyframes shimmer {
+			0% { background-position: 200% 0; }
+			100% { background-position: -200% 0; }
+		}
+
+		.balance-chip {
+			display: inline-flex;
+			align-items: baseline;
+			gap: 0.35rem;
+			padding: 0.35rem 0.7rem;
+			background: var(--brand-soft);
+			border: 1px solid rgba(239, 90, 71, 0.2);
+			border-radius: var(--r-full);
+			font-size: 0.75rem;
+			color: var(--fg-3);
+			font-weight: 600;
+		}
+		.balance-chip strong { color: var(--brand); font-size: 0.88rem; font-weight: 800; }
+
+		.sse-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--fg-4); }
+		.sse-dot.ok { background: var(--success); }
+		.sse-dot.reconnecting { background: var(--warning); animation: pulse-dot 1.2s infinite; }
+		.sse-dot.err { background: var(--danger); }
+
+		.pager { display: flex; gap: 0.25rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem; }
+		.pager button {
+			padding: 0.35rem 0.65rem;
+			background: var(--bg-3);
+			border: 1px solid var(--bd-2);
+			color: var(--fg-2);
+			border-radius: var(--r-sm);
+			font-size: 0.8rem;
+			font-weight: 600;
+			cursor: pointer;
+			transition: all var(--t-fast);
+		}
+		.pager button:hover { border-color: var(--bd-3); color: var(--fg-1); }
+		.pager button.active { background: var(--brand); border-color: var(--brand); color: #fff; }
+	</style>
+<script src="/js/csrf-helper.js"></script>
+</head>
+<body>
+
+<div class="wrap">
+
+	<header class="nav">
+		<div class="container">
+			<div class="nav-inner">
+				<a href="/" class="nav-brand">
+					<img src="/logo.jpg" alt="CS Commends logo" width="40" height="40">
+					<span>CS Commends</span>
+				</a>
+
+				<button class="nav-toggle" id="navToggle" aria-label="Menu">
+					<svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+				</button>
+
+				<nav class="nav-actions" id="navActions">
+					<span class="balance-chip">
+						<span data-i18n="dash.bal_lbl">Bakiye:</span>
+						<strong id="balanceDisplay">-</strong>
+					</span>
+					<span class="status-indicator hidden" id="sseIndicator" style="background: rgba(248,113,113,0.1); color: #f87171; border: 1px solid rgba(248,113,113,0.3);">
+						<span class="sse-dot err" id="sseDot"></span>
+						<span id="sseLabel">Canlı bağlantı koptu</span>
+					</span>
+					<div class="lang-switch">
+						<button data-lang-switch="tr" aria-label="Türkçe seç">TR</button>
+						<button data-lang-switch="en" aria-label="Select English">EN</button>
+						<button data-lang-switch="de" aria-label="Deutsch wählen" title="Deutsch">DE</button>
+						<button data-lang-switch="ru" aria-label="Выбрать русский" title="Русский">RU</button>
+						<button data-lang-switch="pt" aria-label="Selecionar português" title="Português">PT</button>
+						<button data-lang-switch="es" aria-label="Seleccionar español" title="Español">ES</button>
+						<button data-lang-switch="fr" aria-label="Sélectionner le français" title="Français">FR</button>
+						<button data-lang-switch="pl" aria-label="Wybierz polski" title="Polski">PL</button>
+					</div>
+					<button id="logoutBtn" class="btn btn-ghost btn-sm" data-i18n="dash.logout">Çıkış</button>
+				</nav>
+			</div>
+		</div>
+	</header>
+
+	<main class="page-main container" style="padding-top: 1.5rem; padding-bottom: 3rem;">
+
+		<div id="reviewBanner" class="hidden mb-3" style="
+			background: linear-gradient(135deg, rgba(250,204,21,0.12), rgba(74,222,128,0.08));
+			border: 1px solid rgba(250,204,21,0.4);
+			border-radius: 14px;
+			padding: 0.9rem 1.1rem;
+			display: flex; align-items: center; justify-content: space-between;
+			gap: 0.8rem; flex-wrap: wrap;
+			box-shadow: 0 0 0 0 rgba(250,204,21,0.4);
+			animation: rvBannerPulse 2.5s ease-in-out infinite;
+		">
+			<div style="flex:1; min-width: 200px;">
+				<div style="font-weight: 800; color: #facc15; font-size: 1rem;">
+					⭐ <span id="reviewBannerCount">0</span> tamamlanmış siparişin için yorum bekliyor
+				</div>
+				<div class="text-muted fs-sm" style="margin-top: 0.2rem;">
+					Tek tıkla puan ver — ana sayfada yayınlansın, topluluğa yardım et 🙏
+				</div>
+			</div>
+			<button id="reviewBannerCta" class="btn btn-primary btn-sm" style="
+				background: linear-gradient(135deg, #facc15, #f59e0b); color: #0c0c11; font-weight: 800;
+				white-space: nowrap;
+			">
+				⭐ Şimdi Puanla
+			</button>
+			<button id="reviewBannerDismiss" class="btn btn-ghost btn-sm" style="font-size: 1.2rem; padding: 0.3rem 0.6rem;" title="Kapat">×</button>
+		</div>
+		<style>
+			@keyframes rvBannerPulse {
+				0%, 100% { box-shadow: 0 0 0 0 rgba(250, 204, 21, 0.45); }
+				50%      { box-shadow: 0 0 0 10px rgba(250, 204, 21, 0); }
+			}
+			.btn-review-inline {
+				background: linear-gradient(135deg, #facc15, #f59e0b) !important;
+				color: #0c0c11 !important;
+				font-weight: 700 !important;
+				padding: 0.3rem 0.7rem !important;
+				border-radius: 6px !important;
+				font-size: 0.78rem !important;
+				border: 0;
+			}
+			.btn-review-inline:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(250, 204, 21, 0.4); }
+		</style>
+
+		<div class="statusbar mb-3">
+			<span class="st-left">
+				<span class="sse-dot" id="statusDot"></span>
+				<span id="statusText" class="fw-600">Kontrol ediliyor...</span>
+			</span>
+			<span class="st-right">
+				<span id="statusBots"></span>
+				<span id="statusQueue" class="hidden"></span>
+				<span id="statusDetail"></span>
+			</span>
+		</div>
+
+		<div class="grid grid-2 mb-3">
+
+			<section class="card">
+				<h2 data-i18n="dash.send_title">Övgü Gönder</h2>
+
+				<div style="background: linear-gradient(135deg, rgba(34,197,94,0.08), rgba(59,130,246,0.05)); border: 1px solid rgba(34,197,94,0.35); border-radius: 10px; padding: 0.75rem 0.95rem; margin-bottom: 0.85rem; display: flex; gap: 0.6rem; align-items: flex-start;">
+					<span style="font-size: 1.2rem; line-height: 1; flex-shrink: 0;">✅</span>
+					<div style="flex: 1; min-width: 0;">
+						<div style="font-weight: 700; color: #22c55e; font-size: 0.88rem; margin-bottom: 0.2rem;" data-i18n="dash.warn_title">Sipariş öncesi sunucuya bağlan — gerisini sistem halleder</div>
+						<div style="font-size: 0.78rem; color: var(--fg-3); line-height: 1.5;" data-i18n="dash.warn_steps">
+							1. CS2'yi aç → konsola: <code style="background:var(--bg-3); padding:0.1rem 0.35rem; border-radius:3px; font-family:monospace; color:var(--fg-2);">connect __SERVER_ADDR__; password __SERVER_PASSWORD__</code><br>
+							2. Bağlanınca seni otomatik <strong>spectator</strong> (izleyici) yapacak — bu normal. <strong>Takım seçmeye / spawn olmaya çalışma</strong>, ekran siyah kalsa bile öylece bekle.<br>
+							3. Sipariş ver. <strong>3 dakika</strong> bekleriz, bağlanmazsan iade.
+						</div>
+					</div>
+				</div>
+
+				<form id="commendForm" novalidate>
+					<label class="label" for="steamIdInput" data-i18n="dash.steam_lbl">Steam ID veya Profil URL'si</label>
+					<div style="position: relative;">
+						<input type="text" id="steamIdInput" class="input" placeholder="https://steamcommunity.com/profiles/7656..." autocomplete="off" spellcheck="false">
+						<span id="steamIdStatus" class="hidden" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); font-size:0.72rem; font-weight:600;"></span>
+					</div>
+					<div id="steamProfilePreview" class="profile-preview">
+						<div class="avatar" id="steamAvatar">
+							<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+						</div>
+						<div style="flex:1; min-width:0;">
+							<div id="steamName" class="fw-700" style="color: var(--fg-1);">-</div>
+							<div id="steamId64" class="text-muted fs-sm" style="word-break:break-all;">-</div>
+						</div>
+					</div>
+
+					<label class="label mt-3" data-i18n="dash.types_lbl">Övgü Türleri</label>
+					<div class="cluster" style="flex-wrap: wrap; gap: 0.45rem;">
+						<label class="type-chip checked" id="chipFriendly">
+							<input type="checkbox" id="typeFriendly" checked>
+							<span class="chk"><svg width="11" height="11" fill="none" stroke="#fff" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+							<span data-i18n="dash.type_friendly">Friendly</span>
+						</label>
+						<label class="type-chip checked" id="chipTeaching">
+							<input type="checkbox" id="typeTeaching" checked>
+							<span class="chk"><svg width="11" height="11" fill="none" stroke="#fff" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+							<span data-i18n="dash.type_teaching">Teaching</span>
+						</label>
+						<label class="type-chip checked" id="chipLeader">
+							<input type="checkbox" id="typeLeader" checked>
+							<span class="chk"><svg width="11" height="11" fill="none" stroke="#fff" viewBox="0 0 24 24" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></span>
+							<span data-i18n="dash.type_leader">Leader</span>
+						</label>
+					</div>
+
+					<label class="label mt-3" for="amountInput" data-i18n="dash.amount_lbl">Miktar</label>
+					<input type="number" id="amountInput" class="input" placeholder="örn: 20" min="1" autocomplete="off">
+					<div class="cluster mt-1">
+						<button type="button" class="btn btn-ghost btn-sm" data-amount="10">10</button>
+						<button type="button" class="btn btn-ghost btn-sm" data-amount="25">25</button>
+						<button type="button" class="btn btn-ghost btn-sm" data-amount="50">50</button>
+						<button type="button" id="maxBtn" class="btn btn-accent-green btn-sm" data-i18n="dash.max">Maks</button>
+					</div>
+					<div id="costBreakdown" class="hint hidden">
+						<span id="costText"></span>
+					</div>
+
+					<button type="submit" class="btn btn-primary btn-lg btn-block mt-3" id="commendBtn">
+						<svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+						<span data-i18n="dash.send_btn">Övgü Gönder</span>
+					</button>
+				</form>
+
+				<div class="mt-3">
+					<label class="label" for="promoCodeInput" data-i18n="dash.promo_lbl">Promosyon Kodu</label>
+					<div class="input-group">
+						<input type="text" id="promoCodeInput" class="input" placeholder="PROMO-XXXX-XXXX" style="text-transform: uppercase;" maxlength="20">
+						<button type="button" onclick="redeemPromoCode()" class="btn btn-secondary" data-i18n="dash.promo_btn">Kullan</button>
+					</div>
+					<p id="promoResult" class="hint hidden"></p>
+				</div>
+			</section>
+
+			<section class="card">
+				<h2 data-i18n="dash.servers_title">Sunucu Bilgisi</h2>
+				<p class="text-muted fs-sm mb-3" data-i18n="dash.servers_desc">
+					Övgü alabilmek için CS2'yi açıp aşağıdaki sunucuya bağlan.
+				</p>
+				<div id="serverList" class="stack stack-sm"></div>
+			</section>
+		</div>
+
+		<section class="card mb-3">
+			<div class="cluster cluster-between mb-2">
+				<h2 style="margin:0;" data-i18n="dash.active_title">Aktif İşlemler</h2>
+				<span id="activeCount" class="pill pill-brand hidden">0</span>
+			</div>
+			<div id="activeTransactions" class="stack stack-sm">
+				<div class="empty-state" data-i18n="dash.active_empty">Şu anda aktif işlemin yok.</div>
+			</div>
+		</section>
+
+		<section class="card">
+			<h2 data-i18n="dash.history_title">Sipariş Geçmişi</h2>
+			<div style="overflow-x: auto;">
+				<table class="tx-table mt-2">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th data-i18n="dash.col_target">Hedef</th>
+							<th data-i18n="dash.col_total">Toplam</th>
+							<th class="mobile-hidden" data-i18n="dash.col_progress">İlerleme</th>
+							<th data-i18n="dash.col_status">Durum</th>
+							<th class="mobile-hidden" data-i18n="dash.col_date">Tarih</th>
+						</tr>
+					</thead>
+					<tbody id="historyTable">
+						<tr><td colspan="6" class="text-center text-muted">Yükleniyor...</td></tr>
+					</tbody>
+				</table>
+			</div>
+			<div id="historyPagination" class="pager"></div>
+		</section>
+
+	</main>
+
+	<footer class="footer">
+		<div class="container">
+			<span data-i18n="footer">cscommends.com &copy; 2025 - 2026 Tüm hakları saklıdır.</span>
+		</div>
+	</footer>
+
+</div>
+
+<div class="modal" id="modalOverlay" role="dialog" aria-modal="true">
+	<div class="modal-backdrop" onclick="closeModalOnBackdrop(event)"></div>
+	<div class="modal-card" id="modalContent"></div>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="/js/i18n.js?v=3"></script>
+<script>
+(function(){
+	const TOKEN_KEY = 'token';
+	const getToken = () => localStorage.getItem(TOKEN_KEY);
+	const clearToken = () => localStorage.removeItem(TOKEN_KEY);
+
+	if (!getToken()) { location.href = '/login'; return; }
+
+	(function(){
+		const t = document.getElementById('navToggle'); const a = document.getElementById('navActions');
+		if (t && a) {
+			t.addEventListener('click', () => a.classList.toggle('open'));
+			document.addEventListener('click', (e) => { if (!a.contains(e.target) && !t.contains(e.target)) a.classList.remove('open'); });
+		}
+	})();
+
+	const tr = (k, f) => { try { return (typeof i18n !== 'undefined' && i18n.t(k) !== k) ? i18n.t(k) : f; } catch(e) { return f; } };
+
+	const toast = (() => {
+		const el = document.getElementById('toast'); let timer;
+		return (msg, kind) => {
+			el.textContent = msg;
+			el.className = 'toast show ' + (kind || '');
+			clearTimeout(timer);
+			timer = setTimeout(() => el.classList.remove('show'), 3500);
+		};
+	})();
+	window.showToast = toast;
+
+	async function api(path, opts = {}) {
+		const headers = { 'Content-Type': 'application/json', ...(opts.headers || {}) };
+		const t = getToken(); if (t) headers.Authorization = 'Bearer ' + t;
+		const r = await fetch(path, { ...opts, headers });
+		let data; try { data = await r.json(); } catch { data = {}; }
+		if (!r.ok) throw new Error(data.error || 'Request failed');
+		return data;
+	}
+
+	function statusPill(status) {
+		const map = {
+			pending: 'pill-warning',
+			processing: 'pill-success',
+			completed: 'pill-info',
+			failed: 'pill-danger',
+			cancelled: 'pill-neutral'
+		};
+		return '<span class="pill ' + (map[status] || 'pill-neutral') + '">' + status + '</span>';
+	}
+
+	function formatDate(s) {
+		if (!s) return '-';
+		try { return new Date(s + 'Z').toLocaleString('tr-TR'); } catch { return s; }
+	}
+
+	function escapeHtml(s) {
+		if (s == null) return '';
+		return String(s).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+	}
+
+	function openModal(html) {
+		const overlay = document.getElementById('modalOverlay');
+		document.getElementById('modalContent').innerHTML = html;
+		overlay.classList.add('open');
+		document.body.style.overflow = 'hidden';
+	}
+	function closeModal() {
+		document.getElementById('modalOverlay').classList.remove('open');
+		document.body.style.overflow = '';
+	}
+	window.closeModal = closeModal;
+	window.closeModalOnBackdrop = (e) => { if (e.target === e.currentTarget) closeModal(); };
+	document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+	function showConfirmModal(title, body, onConfirm) {
+		openModal(
+			'<div class="modal-head"><h3>' + escapeHtml(title) + '</h3><button class="modal-close" onclick="closeModal()" aria-label="Close">×</button></div>' +
+			'<div class="text-muted fs-sm mb-3">' + body + '</div>' +
+			'<div class="cluster" style="justify-content: flex-end; gap: 0.5rem;">' +
+				'<button class="btn btn-ghost" onclick="closeModal()">' + tr('dash.cancel', 'İptal') + '</button>' +
+				'<button id="cfm" class="btn btn-primary">' + tr('dash.confirm', 'Onayla') + '</button>' +
+			'</div>'
+		);
+		document.getElementById('cfm').onclick = () => { closeModal(); onConfirm(); };
+	}
+
+	function showTxDetail(t) {
+		const pct = t.total > 0 ? Math.round((t.progress / t.total) * 100) : 0;
+		const types = [];
+		if (t.friendly > 0) types.push('Friendly: ' + t.friendly);
+		if (t.teaching > 0) types.push('Teaching: ' + t.teaching);
+		if (t.leader > 0) types.push('Leader: ' + t.leader);
+
+		const reviewable = ['completed', 'partial'].includes(t.status);
+		const reviewBlock = reviewable
+			? '<div id="reviewBlock" class="card" style="background:rgba(74,222,128,0.06); border-color:rgba(74,222,128,0.25); padding:0.85rem 1rem; margin-top:0.5rem;">' +
+				'<div class="cluster cluster-between" style="margin-bottom:0.4rem;">' +
+					'<div class="fw-700" style="color:#4ade80;">⭐ Bu işlemi değerlendir</div>' +
+					'<div id="reviewStatusPill" class="fs-sm text-muted">Yükleniyor...</div>' +
+				'</div>' +
+				'<div id="reviewFormSlot"></div>' +
+			  '</div>'
+			: '';
+
+		const isActive = ['pending', 'processing', 'resuming'].includes(t.status);
+		let etaBlock = '';
+		if (isActive && Number.isFinite(t.estimatedRemainingSec) && t.estimatedRemainingSec > 0) {
+			const min = Math.floor(t.estimatedRemainingSec / 60);
+			const sec = t.estimatedRemainingSec % 60;
+			const txt = min > 0 ? `~${min} dakika ${sec}s` : `~${sec} saniye`;
+			etaBlock = '<div style="background:rgba(74,222,128,0.08); border:1px solid rgba(74,222,128,0.3); border-radius:8px; padding:0.5rem 0.75rem;">' +
+				'<div class="text-muted fs-sm mb-1">⏱ Tahmini kalan süre</div>' +
+				'<div class="fw-700" style="color:#4ade80;">' + txt + '</div>' +
+				'<div class="text-muted fs-sm" style="margin-top:0.25rem;">Sistem her ~16 başarılı yorumda 75 saniyelik bir nefes molası verir (Steam rate limit önleme).</div>' +
+			'</div>';
+		}
+
+		let failBlock = '';
+		const isFailedish = ['failed', 'cancelled', 'partial'].includes(t.status);
+		if (isFailedish && (t.failReason || t.refundedAmount > 0)) {
+			let helpTitleKey = 'tx.help.failed_title', helpBodyKey = 'tx.help.failed_body';
+			let helpTitleFb = 'İşlem tamamlanamadı', helpBodyFb = 'Sistem bu işlemi sonlandırmak zorunda kaldı. Kalan miktar bakiyene iade edildi.';
+
+			if (t.status === 'partial') {
+				helpTitleKey = 'tx.help.partial_title';
+				helpBodyKey = 'tx.help.partial_body';
+				helpTitleFb = 'Kısmi başarı';
+				helpBodyFb = 'İşleminin bir kısmı başarıyla gönderildi, geri kalanı için sebep aşağıda. Eksik kalan miktar bakiyene iade edildi.';
+			}
+			if (t.errorType === 'target_error') {
+				helpTitleKey = 'tx.help.target_left_title';
+				helpBodyKey = 'tx.help.target_left_body';
+				helpTitleFb = 'Hedef oyuncu sunucudan ayrıldı';
+				helpBodyFb = 'Övgü gönderebilmek için hedef oyuncunun sunucuda olması gerekir. Oyuncu sunucudan ayrılınca işlem otomatik durdu ve kalan miktar iade edildi. Oyuncuyu tekrar sunucuya çekip yeni bir sipariş oluşturabilirsin.';
+			}
+
+			const refundLabelFb = 'Bakiyene iade edilen';
+			const buyMoreFb = 'Yeniden sipariş ver';
+			const discordFb = 'Discord destek';
+			const closeFb = 'Kapat';
+
+			failBlock = '<div style="background:linear-gradient(135deg,rgba(248,113,113,0.08),rgba(251,191,36,0.06)); border:1px solid rgba(248,113,113,0.28); border-radius:10px; padding:0.85rem 1rem;">' +
+				'<div class="fw-700 mb-1" style="color:#fca5a5; font-size:0.95rem;">' +
+					'<span style="margin-right:0.4rem;">' + (t.status === 'partial' ? '⚡' : '⚠️') + '</span>' +
+					tr(helpTitleKey, helpTitleFb) +
+				'</div>' +
+				'<div style="color:#d4d4dc; font-size:0.85rem; line-height:1.5; margin-bottom:0.6rem;">' +
+					tr(helpBodyKey, helpBodyFb) +
+				'</div>' +
+				(t.failReason && t.status !== 'partial'
+					? '<div class="text-muted fs-sm mb-1" style="margin-top:0.5rem;">📋 ' + escapeHtml(t.failReason) + '</div>'
+					: ''
+				) +
+				(t.refundedAmount > 0
+					? '<div style="background:rgba(251,191,36,0.08); border:1px solid rgba(251,191,36,0.2); border-radius:6px; padding:0.45rem 0.7rem; margin-top:0.5rem;">' +
+						'<span class="text-muted fs-sm">↩️ ' + tr('tx.help.refund_label', refundLabelFb) + ': </span>' +
+						'<span class="fw-700" style="color:#fbbf24;">' + t.refundedAmount + ' kredi</span>' +
+					'</div>'
+					: ''
+				) +
+				'<div class="cluster" style="margin-top:0.7rem; gap:0.4rem; flex-wrap:wrap;">' +
+					'<button class="btn btn-primary btn-sm" onclick="closeModal();document.getElementById(\'sendSection\')?.scrollIntoView({behavior:\'smooth\'});">' +
+						tr('tx.help.btn_buy_more', buyMoreFb) +
+					'</button>' +
+					'<a href="https://discord.gg/cscommends" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">' +
+						'💬 ' + tr('tx.help.btn_discord', discordFb) +
+					'</a>' +
+				'</div>' +
+			'</div>';
+		}
+
+		openModal(
+			'<div class="modal-head"><h3>İşlem #' + t.id + '</h3><button class="modal-close" onclick="closeModal()" aria-label="Close">×</button></div>' +
+			'<div class="stack stack-sm">' +
+				'<div><div class="text-muted fs-sm mb-1">Durum</div>' + statusPill(t.status) + '</div>' +
+				etaBlock +
+				failBlock +
+				'<div><div class="text-muted fs-sm mb-1">Steam ID</div><div class="fw-600" style="word-break:break-all;">' + escapeHtml(t.steamId) + '</div></div>' +
+				'<div><div class="text-muted fs-sm mb-1">Türler</div><div class="fw-600">' + (types.join(' · ') || '-') + '</div></div>' +
+				'<div><div class="text-muted fs-sm mb-1">İlerleme</div>' +
+					'<div class="progress mt-1"><div class="progress-fill ' + (t.status === 'completed' ? 'success' : '') + '" style="width:' + pct + '%"></div></div>' +
+					'<div class="cluster cluster-between text-muted fs-sm mt-1"><span>' + t.progress + ' / ' + t.total + '</span><span class="fw-700">' + pct + '%</span></div>' +
+				'</div>' +
+				'<div><div class="text-muted fs-sm mb-1">Oluşturuldu</div><div class="fw-600 fs-sm">' + formatDate(t.createdAt) + '</div></div>' +
+				(t.completedAt ? '<div><div class="text-muted fs-sm mb-1">Tamamlandı</div><div class="fw-600 fs-sm">' + formatDate(t.completedAt) + '</div></div>' : '') +
+				reviewBlock +
+			'</div>'
+		);
+
+		if (reviewable) loadReviewWidget(t.id);
+	}
+	window.showTxDetail = showTxDetail;
+
+	async function loadReviewWidget(txId) {
+		const slot = document.getElementById('reviewFormSlot');
+		const pill = document.getElementById('reviewStatusPill');
+		if (!slot) return;
+		try {
+			const r = await api('/api/reviews/eligible/tx/' + txId);
+			if (!r.eligible) {
+				if (r.reason === 'already_reviewed') {
+					const map = { pending: 'Beklemede ⏳', approved: 'Yayında ✓', rejected: 'Reddedildi ✗' };
+					pill.textContent = map[r.existingStatus] || r.existingStatus;
+					slot.innerHTML = '<div class="text-muted fs-sm">Bu işlem için zaten yorum bıraktın.</div>';
+				} else {
+					pill.textContent = '—';
+					slot.innerHTML = '<div class="text-muted fs-sm">Bu işlem yorumlanamıyor (' + r.reason + ').</div>';
+				}
+				return;
+			}
+			pill.textContent = 'Hazır';
+			renderReviewForm(slot, txId, r.bonusAvailable !== false);
+		} catch (e) {
+			pill.textContent = 'Hata';
+			slot.innerHTML = '<div class="text-danger fs-sm">' + escapeHtml(e.message || 'error') + '</div>';
+		}
+	}
+
+	function renderReviewForm(slot, txId, bonusAvailable) {
+		const promoBlock = bonusAvailable
+			? '<div style="background:rgba(250,204,21,0.1); border:1px solid rgba(250,204,21,0.35); border-radius:8px; padding:0.5rem 0.7rem; margin-bottom:0.6rem;">' +
+					'<div style="font-weight:800; color:#facc15; font-size:0.92rem;">💎 +10 Commend Bakiyesi Hediye!</div>' +
+					'<div class="text-muted fs-sm" style="margin-top:0.15rem;">Yorumun moderasyon onayından geçince hesabına otomatik 10 commend bakiye kredi edilir. <strong>Her satın alma kodu için 1 bonus.</strong></div>' +
+				'</div>'
+			: '<div style="background:rgba(148,163,184,0.08); border:1px solid rgba(148,163,184,0.25); border-radius:8px; padding:0.5rem 0.7rem; margin-bottom:0.6rem;">' +
+					'<div style="font-weight:700; color:#94a3b8; font-size:0.88rem;">✓ Bu kod için bonus zaten kullanıldı</div>' +
+					'<div class="text-muted fs-sm" style="margin-top:0.15rem;">Yorumun ana sayfada görünür hale gelir — bakiye eklenmez (kod başına 1 bonus kuralı).</div>' +
+				'</div>';
+		slot.innerHTML =
+			promoBlock +
+			'<div class="rv-stars" id="rvStars" style="display:flex; gap:0.4rem; font-size:2.2rem; cursor:pointer; user-select:none; justify-content:center;">' +
+				'<span data-r="1">☆</span><span data-r="2">☆</span><span data-r="3">☆</span><span data-r="4">☆</span><span data-r="5">☆</span>' +
+			'</div>' +
+			'<textarea id="rvComment" class="input mt-2" rows="3" maxlength="500" placeholder="Deneyimini paylaş (opsiyonel, max 500 karakter)"></textarea>' +
+			'<div class="cluster cluster-between mt-2">' +
+				'<div id="rvCharCount" class="text-muted fs-sm">0 / 500</div>' +
+				'<button id="rvSubmit" class="btn btn-primary btn-sm" disabled style="background:linear-gradient(135deg,#facc15,#f59e0b);color:#0c0c11;font-weight:800;">⭐ Yıldız Seç</button>' +
+			'</div>' +
+			'<div id="rvResult" class="hint mt-2 hidden"></div>';
+
+		let rating = 0;
+		const stars = slot.querySelectorAll('#rvStars span');
+		const submitBtn = slot.querySelector('#rvSubmit');
+		const paint = (n) => stars.forEach((s, i) => { s.textContent = i < n ? '★' : '☆'; s.style.color = i < n ? '#facc15' : ''; });
+		stars.forEach(s => {
+			s.addEventListener('mouseover', () => paint(parseInt(s.dataset.r, 10)));
+			s.addEventListener('mouseout', () => paint(rating));
+			s.addEventListener('click', () => {
+				rating = parseInt(s.dataset.r, 10);
+				paint(rating);
+				submitBtn.disabled = false;
+				submitBtn.textContent = bonusAvailable ? '⭐ Gönder ve +10 Bakiye Kazan' : '⭐ Yorumu Gönder';
+			});
+		});
+
+		const ta = slot.querySelector('#rvComment');
+		const cc = slot.querySelector('#rvCharCount');
+		ta.addEventListener('input', () => { cc.textContent = ta.value.length + ' / 500'; });
+
+		slot.querySelector('#rvSubmit').addEventListener('click', async () => {
+			const result = slot.querySelector('#rvResult');
+			if (!rating) {
+				result.textContent = 'Lütfen 1-5 arası yıldız seç';
+				result.className = 'hint text-danger'; result.classList.remove('hidden');
+				return;
+			}
+			result.textContent = 'Gönderiliyor...';
+			result.className = 'hint text-muted'; result.classList.remove('hidden');
+			try {
+				const res = await fetch('/api/reviews', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + getToken() },
+					body: JSON.stringify({ transactionId: txId, rating, comment: ta.value.trim() || null })
+				});
+				const d = await res.json();
+				if (!res.ok || !d.ok) {
+					result.textContent = d.error || 'Gönderilemedi';
+					result.className = 'hint text-danger';
+					return;
+				}
+				slot.innerHTML = '<div class="hint text-success">✓ Teşekkürler! Yorumun moderasyon sonrası ana sayfada yayınlanacak.</div>';
+				const pill = document.getElementById('reviewStatusPill');
+				if (pill) pill.textContent = 'Beklemede ⏳';
+			} catch (e) {
+				result.textContent = e.message || 'Bağlantı hatası';
+				result.className = 'hint text-danger';
+			}
+		});
+	}
+
+	const AudioCtx = window.AudioContext || window.webkitAudioContext;
+	let audioCtx = null;
+	const ensureAudio = () => { if (!audioCtx) { try { audioCtx = new AudioCtx(); } catch {} } };
+	function playSound(type) {
+		ensureAudio();
+		if (!audioCtx) return;
+		try {
+			const osc = audioCtx.createOscillator();
+			const gain = audioCtx.createGain();
+			osc.connect(gain); gain.connect(audioCtx.destination);
+			const now = audioCtx.currentTime;
+			if (type === 'success') {
+				osc.type = 'sine';
+				osc.frequency.setValueAtTime(523.25, now);
+				osc.frequency.setValueAtTime(659.25, now + 0.1);
+				osc.frequency.setValueAtTime(783.99, now + 0.2);
+				gain.gain.setValueAtTime(0.12, now);
+				gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+				osc.start(now); osc.stop(now + 0.4);
+			} else if (type === 'error') {
+				osc.type = 'sine';
+				osc.frequency.setValueAtTime(440, now);
+				osc.frequency.setValueAtTime(349.23, now + 0.15);
+				gain.gain.setValueAtTime(0.12, now);
+				gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+				osc.start(now); osc.stop(now + 0.35);
+			}
+		} catch {}
+	}
+	document.addEventListener('click', ensureAudio, { once: true });
+
+	let currentUser = null;
+	let systemOnline = false;
+	let txStartTimes = {};
+	let historyCache = {};
+
+	async function init() {
+		try {
+			currentUser = await api('/api/auth/user');
+
+			if (currentUser.productType && currentUser.productType !== 'commend') {
+				if (currentUser.productType === 'hours') location.href = '/hours-boost';
+				else if (currentUser.productType === 'group') location.href = '/group-boost';
+				return;
+			}
+
+			document.getElementById('balanceDisplay').textContent = currentUser.balance;
+			if (currentUser.steamId) {
+				document.getElementById('steamIdInput').value = currentUser.steamId;
+				parseSteamPreview(currentUser.steamId);
+			}
+
+			await loadStatus();
+			await loadServers();
+			await loadActive();
+			await loadHistory(1);
+			loadPendingReviews();
+		} catch (err) {
+			toast(tr('dash.session_expired', 'Oturum süresi dolmuş'), 'error');
+			clearToken();
+			setTimeout(() => location.href = '/login', 900);
+		}
+	}
+
+	async function loadServers() {
+		try {
+			const servers = await api('/api/user/servers');
+			const list = document.getElementById('serverList');
+			if (!servers.length) {
+				list.innerHTML = '<p class="text-muted fs-sm">Sunucu bilgisi yok</p>';
+				return;
+			}
+			list.innerHTML = servers.map(s => {
+				const cmd = 'connect ' + s.ip + '; password ' + s.password;
+				return (
+					'<div class="server-card">' +
+						'<div class="cluster cluster-between mb-1">' +
+							'<span class="fw-700" style="color: var(--fg-1);">' + escapeHtml(s.name) + '</span>' +
+							'<span class="pill pill-success"><span class="status-dot" style="background: var(--success);"></span>Online</span>' +
+						'</div>' +
+						'<div class="cluster" style="align-items: stretch;">' +
+							'<code>' + escapeHtml(cmd) + '</code>' +
+							'<button class="btn btn-primary btn-sm" data-copy="' + escapeHtml(cmd) + '">' + tr('dash.copy', 'Kopyala') + '</button>' +
+						'</div>' +
+					'</div>'
+				);
+			}).join('');
+			list.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', (e) => {
+				const cmd = e.currentTarget.getAttribute('data-copy');
+				navigator.clipboard.writeText(cmd).then(() => toast(tr('dash.copied', 'Kopyalandı!'), 'success'));
+			}));
+		} catch {}
+	}
+
+	async function loadStatus() {
+		try {
+			const status = await fetch('/api/status').then(r => r.json());
+			const dot = document.getElementById('statusDot');
+			const text = document.getElementById('statusText');
+			const bots = document.getElementById('statusBots');
+			const queue = document.getElementById('statusQueue');
+			const detail = document.getElementById('statusDetail');
+			const btn = document.getElementById('commendBtn');
+
+			if (status.online) {
+				systemOnline = true;
+				dot.className = 'sse-dot ok';
+				text.textContent = tr('status.online', 'Sistem aktif');
+				text.style.color = 'var(--success)';
+				btn.disabled = false;
+			} else {
+				systemOnline = false;
+				dot.className = 'sse-dot err';
+				text.textContent = status.maintenance ? tr('status.maintenance', 'Bakımda') : tr('status.offline', 'Çevrimdışı');
+				text.style.color = 'var(--danger)';
+				btn.disabled = true;
+			}
+			bots.textContent = '';
+			detail.textContent = status.maintenance ? tr('dash.maint_msg', 'Bakım çalışması devam ediyor') : (status.online ? '' : '');
+		} catch {}
+	}
+
+	const steamIdInput = document.getElementById('steamIdInput');
+	const steamIdStatus = document.getElementById('steamIdStatus');
+	let steamIdTimeout;
+	steamIdInput.addEventListener('input', () => {
+		clearTimeout(steamIdTimeout);
+		const val = steamIdInput.value.trim();
+		if (!val) { steamIdStatus.classList.add('hidden'); document.getElementById('steamProfilePreview').classList.remove('show'); return; }
+		steamIdTimeout = setTimeout(() => {
+			const re = /^(https?:\/\/steamcommunity\.com\/(profiles|id)\/)?[a-zA-Z0-9_-]+\/?$/;
+			steamIdStatus.classList.remove('hidden');
+			if (re.test(val)) {
+				steamIdStatus.textContent = tr('dash.valid', 'Geçerli');
+				steamIdStatus.style.color = 'var(--success)';
+				parseSteamPreview(val);
+			} else {
+				steamIdStatus.textContent = tr('dash.invalid', 'Geçersiz');
+				steamIdStatus.style.color = 'var(--danger)';
+				document.getElementById('steamProfilePreview').classList.remove('show');
+			}
+		}, 300);
+	});
+
+	function parseSteamPreview(input) {
+		const preview = document.getElementById('steamProfilePreview');
+		const nameEl = document.getElementById('steamName');
+		const idEl = document.getElementById('steamId64');
+		const avatarEl = document.getElementById('steamAvatar');
+
+		let id64 = null, custom = null;
+		const p = input.match(/steamcommunity\.com\/profiles\/(\d{17})/);
+		const c = input.match(/steamcommunity\.com\/id\/([a-zA-Z0-9_-]+)/);
+		const r = input.match(/^(\d{17})$/);
+		if (p) id64 = p[1];
+		else if (r) id64 = r[1];
+		else if (c) custom = c[1];
+
+		if (id64 || custom) {
+			preview.classList.add('show');
+			nameEl.textContent = custom ? custom : 'Steam Kullanıcı';
+			idEl.textContent = id64 ? ('SteamID64: ' + id64) : ('Özel URL: ' + custom);
+			avatarEl.innerHTML = '<svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>';
+
+			if (id64) {
+				fetch('/api/steam/profile/' + id64).then(r => r.ok ? r.json() : null).then(d => {
+					if (d && d.personaname) {
+						nameEl.textContent = d.personaname;
+						if (d.avatarmedium) avatarEl.innerHTML = '<img src="' + d.avatarmedium + '" alt="avatar">';
+					}
+				}).catch(() => {});
+			}
+		} else {
+			preview.classList.remove('show');
+		}
+	}
+
+	function wireChip(chipId, inputId) {
+		const chip = document.getElementById(chipId);
+		const input = document.getElementById(inputId);
+		chip.addEventListener('click', (e) => {
+			e.preventDefault();
+			input.checked = !input.checked;
+			chip.classList.toggle('checked', input.checked);
+			updateCost();
+		});
+	}
+	wireChip('chipFriendly', 'typeFriendly');
+	wireChip('chipTeaching', 'typeTeaching');
+	wireChip('chipLeader', 'typeLeader');
+
+	function updateCost() {
+		const amount = parseInt(document.getElementById('amountInput').value) || 0;
+		const f = document.getElementById('typeFriendly').checked;
+		const t = document.getElementById('typeTeaching').checked;
+		const l = document.getElementById('typeLeader').checked;
+		const br = document.getElementById('costBreakdown');
+		const txt = document.getElementById('costText');
+		if (amount <= 0) { br.classList.add('hidden'); return; }
+		const types = [];
+		if (f) types.push(amount + ' Friendly');
+		if (t) types.push(amount + ' Teaching');
+		if (l) types.push(amount + ' Leader');
+		if (!types.length) { br.classList.add('hidden'); return; }
+		br.classList.remove('hidden');
+		txt.textContent = tr('dash.cost_prefix', 'Toplam maliyet:') + ' ' + types.join(' · ') + ' = ' + amount + ' ' + tr('dash.credit', 'kredi');
+	}
+	document.getElementById('amountInput').addEventListener('input', updateCost);
+
+	document.querySelectorAll('[data-amount]').forEach(b => b.addEventListener('click', (e) => {
+		document.getElementById('amountInput').value = e.currentTarget.dataset.amount;
+		updateCost();
+	}));
+	document.getElementById('maxBtn').addEventListener('click', () => {
+		if (currentUser) { document.getElementById('amountInput').value = currentUser.balance; updateCost(); }
+	});
+
+	document.getElementById('commendForm').addEventListener('submit', (e) => {
+		e.preventDefault();
+		const steamId = document.getElementById('steamIdInput').value.trim();
+		const amount = parseInt(document.getElementById('amountInput').value);
+		const f = document.getElementById('typeFriendly').checked;
+		const t = document.getElementById('typeTeaching').checked;
+		const l = document.getElementById('typeLeader').checked;
+
+		if (!steamId) return toast(tr('dash.err_steam', 'Steam profili gir'), 'error');
+		if (!amount || amount <= 0) return toast(tr('dash.err_amount', 'Geçerli miktar gir'), 'error');
+		if (!f && !t && !l) return toast(tr('dash.err_type', 'En az bir tür seç'), 'error');
+		if (!systemOnline) return toast(tr('dash.err_offline', 'Sistem çevrimdışı'), 'error');
+
+		const types = [];
+		if (f) types.push('Friendly');
+		if (t) types.push('Teaching');
+		if (l) types.push('Leader');
+
+		const bodyHtml =
+			'<div class="stack stack-sm">' +
+				'<div><span class="text-muted fs-sm">Hedef: </span><span class="fw-700" style="word-break:break-all;">' + escapeHtml(steamId) + '</span></div>' +
+				'<div><span class="text-muted fs-sm">Miktar: </span><span class="fw-700">' + amount + '</span></div>' +
+				'<div><span class="text-muted fs-sm">Türler: </span><span class="fw-700">' + types.join(', ') + '</span></div>' +
+				'<div class="alert alert-warning fs-sm mt-2"><span>Toplam <strong>' + amount + '</strong> kredi bakiyenden düşülecek.</span></div>' +
+			'</div>';
+		showConfirmModal(tr('dash.confirm_title', 'Övgü Gönder'), bodyHtml, doCommend);
+	});
+
+	async function doCommend() {
+		const steamId = document.getElementById('steamIdInput').value.trim();
+		const amount = parseInt(document.getElementById('amountInput').value);
+		const f = document.getElementById('typeFriendly').checked;
+		const t = document.getElementById('typeTeaching').checked;
+		const l = document.getElementById('typeLeader').checked;
+		const btn = document.getElementById('commendBtn');
+
+		btn.disabled = true;
+		const orig = btn.innerHTML;
+		btn.innerHTML = '<span class="spinner"></span>';
+
+		try {
+			await api('/api/user/profile', { method: 'POST', body: JSON.stringify({ steamId }) });
+			const data = await api('/api/user/commend', {
+				method: 'POST',
+				body: JSON.stringify({ steamId, amount, friendly: f, teaching: t, leader: l })
+			});
+			currentUser.balance = data.newBalance;
+			document.getElementById('balanceDisplay').textContent = data.newBalance;
+			document.getElementById('amountInput').value = '';
+			document.getElementById('costBreakdown').classList.add('hidden');
+			toast(tr('dash.sent', 'Övgü işlemi başlatıldı'), 'success');
+			playSound('success');
+			await loadActive();
+			await loadHistory(1);
+		} catch (err) {
+			toast(err.message, 'error');
+			playSound('error');
+		} finally {
+			btn.disabled = !systemOnline;
+			btn.innerHTML = orig;
+		}
+	}
+
+	async function loadActive() {
+		try {
+			const txs = await api('/api/user/transactions/active');
+			const c = document.getElementById('activeTransactions');
+			const cnt = document.getElementById('activeCount');
+			if (!txs.length) {
+				c.innerHTML = '<div class="empty-state">' + tr('dash.active_empty', 'Şu anda aktif işlemin yok.') + '</div>';
+				cnt.classList.add('hidden');
+				return;
+			}
+			cnt.textContent = txs.length;
+			cnt.classList.remove('hidden');
+
+			c.innerHTML = txs.map(t => {
+				const pct = t.total > 0 ? Math.round((t.progress / t.total) * 100) : 0;
+				const types = [];
+				if (t.friendly > 0) types.push('F');
+				if (t.teaching > 0) types.push('T');
+				if (t.leader > 0) types.push('L');
+
+				const key = 'tx_' + t.id;
+				if (!txStartTimes[key]) txStartTimes[key] = { start: Date.now(), startProgress: t.progress };
+				const elapsed = (Date.now() - txStartTimes[key].start) / 1000;
+				const delta = t.progress - txStartTimes[key].startProgress;
+				let eta = '';
+				if (delta > 0 && t.progress < t.total) {
+					const rate = delta / elapsed;
+					const rem = (t.total - t.progress) / rate;
+					if (rem < 60) eta = '~' + Math.ceil(rem) + 'sn';
+					else if (rem < 3600) eta = '~' + Math.ceil(rem / 60) + 'dk';
+					else eta = '~' + Math.round(rem / 3600 * 10) / 10 + 'sa';
+				}
+
+				return (
+					'<div class="tx-item">' +
+						'<div class="cluster cluster-between mb-1">' +
+							'<div style="min-width:0; flex:1;">' +
+								'<div class="fw-700" style="color: var(--fg-1); word-break:break-all;">' + escapeHtml(t.steamId) + '</div>' +
+								'<div class="text-muted fs-sm">[' + types.join('+') + '] · #' + t.id + '</div>' +
+							'</div>' +
+							statusPill(t.status) +
+						'</div>' +
+						'<div class="progress"><div class="progress-fill ' + (t.status === 'processing' ? 'shimmer' : '') + '" style="width:' + pct + '%"></div></div>' +
+						'<div class="cluster cluster-between text-muted fs-sm mt-1">' +
+							'<span>' + t.progress + '/' + t.total + '</span>' +
+							'<div class="cluster">' +
+								(eta ? '<span class="text-brand">' + eta + '</span>' : '') +
+								'<span class="fw-700">' + pct + '%</span>' +
+							'</div>' +
+						'</div>' +
+					'</div>'
+				);
+			}).join('');
+		} catch {}
+	}
+
+	async function loadPendingReviews() {
+		try {
+			if (sessionStorage.getItem('reviewBannerDismissed') === '1') return;
+			const data = await api('/api/reviews/my-pending');
+			const banner = document.getElementById('reviewBanner');
+			if (!banner) return;
+			if (data.count > 0 && data.recent && data.recent[0]) {
+				document.getElementById('reviewBannerCount').textContent = data.count;
+				banner.classList.remove('hidden');
+				const firstTxId = data.recent[0].id;
+				document.getElementById('reviewBannerCta').onclick = () => {
+					if (historyCache[firstTxId]) showTxDetail(historyCache[firstTxId]);
+					else api('/api/user/transactions/history?page=1&limit=10').then(d => {
+						(d.transactions || []).forEach(t => { historyCache[t.id] = t; });
+						if (historyCache[firstTxId]) showTxDetail(historyCache[firstTxId]);
+					});
+				};
+				document.getElementById('reviewBannerDismiss').onclick = () => {
+					banner.classList.add('hidden');
+					sessionStorage.setItem('reviewBannerDismissed', '1');
+				};
+			} else {
+				banner.classList.add('hidden');
+			}
+		} catch {}
+	}
+
+	async function loadHistory(page) {
+		try {
+			const data = await api('/api/user/transactions/history?page=' + page + '&limit=10');
+			const tbody = document.getElementById('historyTable');
+			data.transactions.forEach(t => { historyCache[t.id] = t; });
+
+			if (!data.transactions.length) {
+				tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">' + tr('dash.history_empty', 'Henüz işlem yok') + '</td></tr>';
+				return;
+			}
+
+			tbody.innerHTML = data.transactions.map(t => {
+				const pct = t.total > 0 ? Math.round((t.progress / t.total) * 100) : 0;
+				const reviewable = ['completed', 'partial'].includes(t.status);
+				const reviewBtn = reviewable
+					? '<button class="btn-review-inline" data-review-tx="' + t.id + '" title="Bu işlemi puanla">⭐ Puanla</button>'
+					: '';
+				return (
+					'<tr data-txid="' + t.id + '">' +
+						'<td class="text-muted fs-sm">#' + t.id + '</td>' +
+						'<td style="font-size:0.82rem; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + escapeHtml(t.steamId) + '</td>' +
+						'<td class="fw-600">' + t.total + '</td>' +
+						'<td class="mobile-hidden text-muted fs-sm">' + t.progress + '/' + t.total + ' (' + pct + '%)</td>' +
+						'<td>' + statusPill(t.status) + ' ' + reviewBtn + '</td>' +
+						'<td class="mobile-hidden text-muted fs-sm">' + formatDate(t.createdAt) + '</td>' +
+					'</tr>'
+				);
+			}).join('');
+
+			tbody.querySelectorAll('tr[data-txid]').forEach(tr => tr.addEventListener('click', (e) => {
+				if (e.target.closest('[data-review-tx]')) return;
+				const id = tr.getAttribute('data-txid');
+				if (historyCache[id]) showTxDetail(historyCache[id]);
+			}));
+			tbody.querySelectorAll('[data-review-tx]').forEach(b => b.addEventListener('click', (e) => {
+				e.stopPropagation();
+				const id = b.getAttribute('data-review-tx');
+				if (historyCache[id]) showTxDetail(historyCache[id]);
+			}));
+
+			const pg = document.getElementById('historyPagination');
+			if (data.totalPages > 1) {
+				let html = '';
+				for (let i = 1; i <= data.totalPages; i++) {
+					const active = i === data.page;
+					html += '<button class="' + (active ? 'active' : '') + '" data-page="' + i + '">' + i + '</button>';
+				}
+				pg.innerHTML = html;
+				pg.querySelectorAll('[data-page]').forEach(b => b.addEventListener('click', (e) => loadHistory(parseInt(e.currentTarget.dataset.page))));
+			} else {
+				pg.innerHTML = '';
+			}
+		} catch {}
+	}
+
+	async function redeemPromoCode() {
+		const input = document.getElementById('promoCodeInput');
+		const result = document.getElementById('promoResult');
+		const code = input.value.trim();
+		if (!code) {
+			result.textContent = tr('dash.promo_empty', 'Promosyon kodu gir');
+			result.className = 'hint text-danger'; result.classList.remove('hidden');
+			return;
+		}
+		result.textContent = tr('dash.promo_checking', 'Kontrol ediliyor...');
+		result.className = 'hint text-muted'; result.classList.remove('hidden');
+		try {
+			const res = await fetch('/api/user/promo/redeem', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + getToken() },
+				body: JSON.stringify({ code })
+			});
+			const data = await res.json();
+			if (!res.ok) {
+				result.textContent = data.error || tr('dash.promo_fail', 'Promosyon kodu kullanılamadı');
+				result.className = 'hint text-danger';
+				return;
+			}
+			result.textContent = '+' + data.balanceAdded + ' bakiye · Yeni bakiye: ' + data.newBalance;
+			result.className = 'hint text-success';
+			input.value = '';
+			document.getElementById('balanceDisplay').textContent = data.newBalance;
+		} catch {
+			result.textContent = tr('dash.promo_conn', 'Bağlantı hatası');
+			result.className = 'hint text-danger';
+		}
+	}
+	window.redeemPromoCode = redeemPromoCode;
+
+	document.getElementById('logoutBtn').addEventListener('click', () => {
+		clearToken();
+		location.href = '/';
+	});
+
+	let es = null, sseRetry = 0;
+	const SSE_MAX = 6, SSE_BASE = 1000;
+
+	function setSSE(state) {
+		const ind = document.getElementById('sseIndicator');
+		const dot = document.getElementById('sseDot');
+		const lbl = document.getElementById('sseLabel');
+		if (!ind) return;
+
+		if (state === 'disconnected') {
+			ind.classList.remove('hidden');
+			dot.className = 'sse-dot err';
+			lbl.textContent = tr('dash.sse_off', 'Canlı bağlantı koptu — sayfayı yenileyin');
+		} else {
+			ind.classList.add('hidden');
+		}
+	}
+
+	function connectSSE() {
+		const token = getToken(); if (!token) return;
+		setSSE('reconnecting');
+		es = new EventSource('/api/events?token=' + encodeURIComponent(token));
+		es.onopen = () => { sseRetry = 0; setSSE('connected'); };
+		es.addEventListener('transactionUpdate', (e) => {
+			try {
+				const d = JSON.parse(e.data);
+				loadActive();
+				if (['completed', 'failed', 'cancelled'].includes(d.status)) {
+					delete txStartTimes['tx_' + d.id];
+					loadHistory(1);
+					api('/api/auth/user').then(u => {
+						currentUser = u;
+						document.getElementById('balanceDisplay').textContent = u.balance;
+					}).catch(() => {});
+					if (d.status === 'completed') { toast('İşlem #' + d.id + ' tamamlandı!', 'success'); playSound('success'); }
+					else if (d.status === 'failed') { toast('İşlem #' + d.id + ' başarısız', 'error'); playSound('error'); }
+				}
+			} catch {}
+		});
+		es.addEventListener('heartbeat', () => {});
+		es.onerror = () => {
+			es.close();
+			sseRetry++;
+			if (sseRetry <= SSE_MAX) {
+				const delay = Math.min(SSE_BASE * Math.pow(2, sseRetry - 1), 30000);
+				setSSE('reconnecting');
+				setTimeout(connectSSE, delay);
+			} else {
+				setSSE('disconnected');
+				setTimeout(() => { sseRetry = 0; connectSSE(); }, 60000);
+			}
+		};
+	}
+
+	setInterval(async () => {
+		await loadActive();
+		try {
+			const u = await api('/api/auth/user');
+			currentUser = u;
+			document.getElementById('balanceDisplay').textContent = u.balance;
+		} catch {}
+	}, 15000);
+	setInterval(loadStatus, 30000);
+
+	init();
+	connectSSE();
+})();
+</script>
+
+	<script src="/js/announcement-banner.js" defer></script>
+	<script src="/js/system-health-badge.js" defer></script>
+	<script src="/js/onboarding-tour.js" defer></script>
+	<script src="/js/tawk.js" defer></script>
+	<script src="/js/sale-popup.js?v=4" defer></script>
+</body>
+</html>

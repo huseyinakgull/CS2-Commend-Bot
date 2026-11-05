@@ -1,0 +1,44 @@
+{
+  "steamApiKey": "",
+  "server": {
+    "ip": "127.0.0.1",
+    "port": "27015",
+    "password": "",
+    "logReceiverIp": "127.0.0.1",
+    "logReceiverPort": 27500
+  },
+  "commends": {
+    "friendly": 10,
+    "teaching": 10,
+    "leader": 10
+  },
+  "matchId": "0",
+  "concurrency": 3,
+  "delayBetweenLogins": 1000,
+  "delayBetweenCommends": 500,
+  "verifyCommends": true,
+  "processorPollInterval": 5000,
+  "processorMaxRetries": 2,
+  "webhookUrl": "",
+  "webPort": 3000,
+  "publicBaseUrl": "https://your-domain.com",
+  "proxy": {
+    "enabled": false,
+    "file": "proxies.txt",
+    "switchEvery": 20,
+    "insecureTls": false
+  },
+  "cs2Server": {
+    "dir": "C:\\cs2server",
+    "steamcmdPath": "C:\\steamcmd\\steamcmd.exe",
+    "startScript": "C:\\cs2server\\baslat.bat"
+  },
+  "pipeline": {
+    "pipelineSize": 4,
+    "staggerMs": 5000,
+    "maxConsecutiveFails": 35,
+    "throttleEvery": 15,
+    "throttleMs": 75000,
+    "maxParallelChildren": 6
+  }
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title data-i18n-title="meta.title.paycancel">Ödeme İptal Edildi | CS Commends</title>
+	<meta name="robots" content="noindex, nofollow">
+	<meta name="theme-color" content="#0e0e15">
+	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/theme-toc.css?v=1">
+	<style>
+		body { display: flex; flex-direction: column; min-height: 100vh; background: var(--bg-0); }
+		body::before {
+			content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+			background: radial-gradient(ellipse 60% 40% at 50% 30%, rgba(245,166,35,0.06), transparent 60%);
+		}
+		.cancel-main { flex: 1; padding: 4rem 1rem; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
+		.cancel-card {
+			max-width: 480px; width: 100%; background: rgba(15,15,25,0.85);
+			border: 1px solid var(--bd-1); padding: 2.5rem 2rem; text-align: center;
+			backdrop-filter: blur(12px);
+		}
+		.icon {
+			width: 72px; height: 72px; margin: 0 auto 1rem;
+			display: inline-flex; align-items: center; justify-content: center;
+			font-size: 40px; border: 2px solid #f5a623; color: #f5a623;
+		}
+		h1 { font-family: var(--font-mono); font-size: 1.4rem; margin: 0.5rem 0 0.75rem; letter-spacing: 0.05em; }
+		p { color: var(--fg-2); margin: 0.5rem 0; font-size: 0.95rem; line-height: 1.5; }
+		.actions { margin-top: 1.75rem; display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+		.btn {
+			padding: 0.75rem 1.25rem; font-family: var(--font-mono);
+			font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700;
+			text-decoration: none; border: 1px solid;
+		}
+		.btn-primary { background: #f5a623; color: #0e0e15; border-color: #f5a623; }
+		.btn-primary:hover { background: transparent; color: #f5a623; }
+		.btn-ghost { background: transparent; color: var(--fg-2); border-color: var(--bd-1); }
+		.btn-ghost:hover { color: var(--fg-0); border-color: var(--fg-2); }
+	</style>
+</head>
+<body>
+
+<header class="toc-nav">
+	<div class="toc-nav-inner">
+		<a href="/" class="toc-nav-brand">
+			<div class="toc-brand-mark">CS</div>
+			<div class="toc-brand-text">
+				<span class="toc-callsign" data-i18n="toc.callsign">// CS-COMMENDS</span>
+				<span class="toc-name" data-i18n="toc.center">Operations Center</span>
+			</div>
+		</a>
+	</div>
+</header>
+
+<main class="cancel-main">
+	<div class="cancel-card">
+		<div class="icon">✕</div>
+		<h1 data-i18n="paycancel.title">Ödeme İptal Edildi</h1>
+		<p data-i18n="paycancel.desc">Ödeme tamamlanmadan sayfa kapatıldı. Herhangi bir ücret çekilmedi.</p>
+		<p data-i18n="paycancel.hint">İstersen tekrar deneyebilir veya farklı bir ödeme yöntemi için Discord destek kanalını kullanabilirsin.</p>
+		<div class="actions">
+			<a href="/kripto" class="btn btn-primary" data-i18n="paycancel.retry">TEKRAR DENE</a>
+			<a href="https://discord.gg/K4G3RADfbc" class="btn btn-ghost" data-i18n="paycancel.support">DESTEK</a>
+		</div>
+	</div>
+</main>
+
+<script src="/js/sale-popup.js?v=4" defer></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "port": 3000,
+  "jwtSecret": "",
+  "adminPassword": "",
+  "serverInfo": [
+    {
+      "name": "CS2 Server",
+      "ip": "127.0.0.1:27015",
+      "password": ""
+    }
+  ],
+  "discord": {
+    "clientId": "",
+    "clientSecret": "",
+    "guildId": "",
+    "inviteUrl": "",
+    "redirectUri": "https://your-domain.com/api/discord/callback",
+    "cookieSecret": "",
+    "verifyTtlSeconds": 1800
+  }
+}

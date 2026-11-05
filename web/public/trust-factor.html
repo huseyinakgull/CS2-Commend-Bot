@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title data-i18n-title="meta.title.trust">CS2 Trust Factor Tahminleyici ⚡ Ücretsiz Steam Profil Analizi | CS Commends</title>
+	<meta name="description" data-i18n-content="meta.desc.trust" content="CS2 Trust Factor'ünüzü ücretsiz tahmin edin ✓ Steam ID girin ✓ 30 saniyede tam profil analizi ✓ Hesap yaşı, CS2 saati, commend sayısı, ban geçmişi ve daha fazlası ✓ Kişiselleştirilmiş aksiyon önerileri ✓ Hiçbir bilgi saklanmaz.">
+	<meta name="keywords" content="cs2 trust factor, cs2 trust factor öğren, cs2 trust factor kontrol, cs2 trust factor hesapla, cs2 trust factor tahmin, cs2 trust skor, trust factor nasıl, cs2 hesap analiz, steam profil analiz, cs2 hesap durumu">
+	<meta name="author" content="CS Commends">
+	<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+	<meta name="theme-color" content="#0e0e15">
+	<link rel="canonical" href="https://cscommends.com/trust-factor">
+	<link rel="alternate" hreflang="tr" href="https://cscommends.com/trust-factor">
+	<link rel="alternate" hreflang="en" href="https://cscommends.com/en/trust-factor">
+	<link rel="alternate" hreflang="de" href="https://cscommends.com/de/trust-factor">
+	<link rel="alternate" hreflang="ru" href="https://cscommends.com/ru/trust-factor">
+	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/theme-toc.css?v=1">
+
+	<style>
+		body { display: flex; flex-direction: column; min-height: 100vh; }
+		body::before {
+			content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+			background:
+				radial-gradient(ellipse 70% 50% at 30% 20%, rgba(74, 222, 128, 0.08), transparent 60%),
+				radial-gradient(ellipse 70% 50% at 70% 80%, rgba(255, 107, 0, 0.05), transparent 60%);
+		}
+
+		.toc-tf-main { flex: 1; padding: 3rem 1rem 4rem; position: relative; z-index: 1; }
+		.toc-tf-container { max-width: 920px; margin: 0 auto; }
+
+		.toc-tf-hero { text-align: center; margin-bottom: 2.5rem; }
+		.toc-tf-hero .toc-label { display: block; margin-bottom: 0.8rem; color: var(--toc-green); }
+		.toc-tf-hero h1 {
+			font-size: clamp(1.9rem, 4.5vw + 0.5rem, 3rem); font-weight: 800;
+			margin: 0 0 1rem; letter-spacing: -0.015em;
+		}
+		.toc-tf-hero h1 .acc { color: var(--toc-green); }
+		.toc-tf-hero p {
+			color: var(--fg-2); font-size: 1rem; line-height: 1.6;
+			max-width: 640px; margin: 0 auto;
+		}
+
+		.toc-tf-form-card {
+			max-width: 560px; margin: 2rem auto 1rem;
+			background: var(--bg-2); border: 1px solid var(--bd-1);
+			padding: 1.6rem; position: relative;
+		}
+		.toc-tf-form-card::before, .toc-tf-form-card::after,
+		.toc-tf-form-card > .corner-bl, .toc-tf-form-card > .corner-br {
+			content: ''; position: absolute; width: 14px; height: 14px;
+			border: 2px solid var(--toc-green); pointer-events: none; z-index: 2;
+		}
+		.toc-tf-form-card::before { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+		.toc-tf-form-card::after  { top: -2px; right: -2px; border-left: 0; border-bottom: 0; }
+		.toc-tf-form-card > .corner-bl { bottom: -2px; left: -2px; border-right: 0; border-top: 0; }
+		.toc-tf-form-card > .corner-br { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+		.toc-tf-label {
+			display: block; font-family: var(--font-mono); font-size: 0.7rem;
+			text-transform: uppercase; letter-spacing: 0.12em;
+			color: var(--toc-green); margin-bottom: 0.6rem;
+		}
+		.tf-input {
+			width: 100%; padding: 0.85rem 1rem;
+			background: var(--bg-1); border: 1px solid var(--bd-2); color: var(--fg-1);
+			font-family: var(--font-mono); font-size: 0.9rem;
+			transition: border-color 0.15s, box-shadow 0.15s;
+		}
+		.tf-input::placeholder { color: var(--fg-3); }
+		.tf-input:focus { outline: none; border-color: var(--toc-green); box-shadow: 0 0 0 1px var(--toc-green); }
+
+		.tf-deep-toggle {
+			display: flex; align-items: center; gap: 0.5rem;
+			margin-top: 0.9rem; cursor: pointer;
+			font-family: var(--font-mono); font-size: 0.75rem; color: var(--fg-2);
+		}
+		.tf-deep-toggle input { accent-color: var(--toc-green); cursor: pointer; }
+
+		.tf-btn {
+			display: inline-flex; align-items: center; justify-content: center;
+			width: 100%; padding: 0.95rem 1.5rem;
+			background: var(--toc-green); color: #07140C;
+			border: 1px solid var(--toc-green);
+			font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700;
+			text-transform: uppercase; letter-spacing: 0.1em;
+			cursor: pointer; transition: all 0.15s;
+			box-shadow: 0 0 20px rgba(74, 222, 128, 0.25);
+		}
+		.tf-btn:hover { background: #6ee895; box-shadow: 0 0 30px rgba(74, 222, 128, 0.5); transform: translateY(-1px); }
+		.tf-btn:disabled { opacity: 0.5; pointer-events: none; }
+		.tf-btn::before { content: '['; opacity: 0.6; margin-right: 0.3rem; }
+		.tf-btn::after  { content: ']'; opacity: 0.6; margin-left: 0.3rem; }
+
+		.tf-error {
+			margin-top: 0.8rem; padding: 0.6rem 0.8rem;
+			background: rgba(255, 68, 68, 0.08); border: 1px solid var(--toc-red);
+			color: var(--toc-red); font-family: var(--font-mono); font-size: 0.78rem;
+		}
+
+		.tf-result { margin-top: 2rem; }
+
+		.tf-loading {
+			text-align: center; padding: 2rem; margin-top: 2rem;
+			background: var(--bg-2); border: 1px solid var(--bd-1);
+			font-family: var(--font-mono); color: var(--fg-2);
+		}
+		.tf-loading .spin {
+			width: 32px; height: 32px;
+			border: 3px solid var(--bd-2); border-top-color: var(--toc-green);
+			border-radius: 50%; margin: 0 auto 1rem;
+			animation: spin 0.8s linear infinite;
+		}
+		@keyframes spin { to { transform: rotate(360deg); } }
+
+		.toc-tf-section { margin-top: 4rem; }
+		.toc-tf-section .toc-section-head { text-align: center; margin-bottom: 2rem; }
+
+		.toc-tf-feature-grid {
+			display: grid; gap: 1px; background: var(--bd-1);
+			border: 1px solid var(--bd-1);
+			grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+		}
+		.toc-tf-feature {
+			background: var(--bg-2); padding: 1.4rem 1.2rem;
+			transition: background 0.15s;
+		}
+		.toc-tf-feature:hover { background: var(--bg-3); }
+		.toc-tf-feature .ico {
+			font-size: 1.6rem; margin-bottom: 0.5rem; display: block;
+		}
+		.toc-tf-feature h3 { font-size: 1rem; margin: 0 0 0.4rem; font-weight: 700; }
+		.toc-tf-feature p { font-size: 0.83rem; color: var(--fg-2); line-height: 1.55; margin: 0; }
+
+		.toc-tf-faq {
+			display: flex; flex-direction: column; gap: 0.5rem;
+			max-width: 760px; margin: 0 auto;
+		}
+
+		.text-muted { color: var(--fg-3); }
+		.fs-sm { font-size: 0.85rem; }
+		.mt-1 { margin-top: 0.4rem; }
+		.mt-2 { margin-top: 0.8rem; }
+		.mt-3 { margin-top: 1.2rem; }
+
+		.toc-footer { background: var(--bg-0); border-top: 1px solid var(--bd-1); padding: 2.5rem 1.5rem 1.5rem; position: relative; z-index: 1; }
+		.toc-footer-bottom { max-width: 1200px; margin: 0 auto; text-align: center; font-family: var(--font-mono); font-size: 0.72rem; color: var(--fg-3); text-transform: uppercase; letter-spacing: 0.12em; }
+	</style>
+<script src="/js/csrf-helper.js"></script>
+</head>
+<body>
+
+<header class="toc-nav">
+	<div class="toc-nav-inner">
+		<a href="/" class="toc-nav-brand">
+			<img src="/logo.jpg" alt="CS Commends" loading="eager">
+			<div class="toc-brand-text">
+				<span class="toc-callsign" data-i18n="toc.callsign">// CS-COMMENDS</span>
+				<span class="toc-name" data-i18n="toc.center">Operations Center</span>
+			</div>
+		</a>
+
+		<button class="toc-nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+			<svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+		</button>
+
+		<nav class="toc-nav-actions" id="navActions">
+			<div class="toc-lang">
+				<button data-lang-switch="tr" aria-label="Türkçe seç" title="Türkçe">TR</button>
+				<button data-lang-switch="en" aria-label="Select English" title="English">EN</button>
+				<button data-lang-switch="de" aria-label="Deutsch wählen" title="Deutsch">DE</button>
+				<button data-lang-switch="ru" aria-label="Выбрать русский" title="Русский">RU</button>
+				<button data-lang-switch="pt" aria-label="Selecionar português" title="Português">PT</button>
+				<button data-lang-switch="es" aria-label="Seleccionar español" title="Español">ES</button>
+				<button data-lang-switch="fr" aria-label="Sélectionner le français" title="Français">FR</button>
+				<button data-lang-switch="pl" aria-label="Wybierz polski" title="Polski">PL</button>
+			</div>
+			<div class="toc-nav-links">
+				<a href="/hours-boost" class="toc-nav-link" data-i18n="nav.hours">Saat</a>
+				<a href="/group-boost" class="toc-nav-link" data-i18n="nav.group">Grup</a>
+				<a href="/bayilik" class="toc-nav-link toc-link-yellow" data-i18n="nav.dealer">Bayilik</a>
+			</div>
+			<a href="/" class="btn btn-sm btn-ghost btn-bracket" data-i18n="login.back">Ana Sayfa</a>
+			<a href="/free-commend" class="btn btn-sm btn-accent-green btn-bracket" data-i18n="nav.free">Ücretsiz</a>
+		</nav>
+	</div>
+</header>
+
+<main class="toc-tf-main">
+	<div class="toc-tf-container">
+
+		<section class="toc-tf-hero">
+			<span class="toc-label">// FREE TOOL — TRUST FACTOR ANALYZER</span>
+			<h1>CS2 <span class="acc">Trust Factor</span> Tahminleyici</h1>
+			<p>Steam profilini analiz ediyoruz: hesap yaşı, CS2 saatin, commend sayın, ban geçmişin ve daha fazlası. <strong>Tahmini Trust Factor'ünü</strong> ve onu yükseltmenin yolunu görüyorsun.</p>
+
+			<form id="tfForm" class="toc-tf-form-card">
+				<span class="corner-bl"></span><span class="corner-br"></span>
+				<label for="steamInput" class="toc-tf-label">// STEAM PROFIL URL veya STEAMID64</label>
+				<input type="text" id="steamInput" class="tf-input"
+					   placeholder="https://steamcommunity.com/id/exampleuser veya 7656119..."
+					   autocomplete="off" spellcheck="false">
+
+				<label class="tf-deep-toggle" title="Bot havuzundan gerçek commend sayını çeker (yavaş, daha doğru)">
+					<input type="checkbox" id="tfDeep">
+					Derin analiz (commend sayısını da çek — biraz daha yavaş)
+				</label>
+
+				<button type="submit" class="tf-btn mt-3" id="tfAnalyze">
+					🔍 Trust Factor'ümü Tahmin Et
+				</button>
+				<div id="tfErr" class="tf-error" style="display: none;"></div>
+			</form>
+
+			<p class="text-muted fs-sm mt-2" style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.05em;">
+				🔒 Sadece public Steam Web API kullanılır · Hiçbir bilgi paylaşılmaz · Şifre asla istenmez
+			</p>
+		</section>
+
+		<div id="tfResult" class="tf-result"></div>
+
+		<div id="tfLoading" class="tf-loading" style="display: none;">
+			<div class="spin"></div>
+			<div style="text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.85rem;">Steam profil analiz ediliyor...</div>
+			<div class="text-muted fs-sm mt-1" id="tfLoadingDetail" style="font-size: 0.72rem;">Public veriler çekiliyor</div>
+		</div>
+
+		<section class="toc-tf-section">
+			<div class="toc-section-head">
+				<span class="toc-label">// SECTOR — METRICS</span>
+				<h2>Bu Araç Neyi Ölçer?</h2>
+			</div>
+			<div class="toc-tf-feature-grid">
+				<div class="toc-tf-feature">
+					<span class="ico">📅</span>
+					<h3>Hesap Yaşı</h3>
+					<p>Eski hesaplar daha yüksek Trust alır. Yeni hesaplar şüpheli görünür.</p>
+				</div>
+				<div class="toc-tf-feature">
+					<span class="ico">⏱️</span>
+					<h3>CS2 Saati</h3>
+					<p>250+ saat FACEIT eligibility için, 1000+ MM havuzu için ideal.</p>
+				</div>
+				<div class="toc-tf-feature">
+					<span class="ico">👍</span>
+					<h3>Commend Sayısı</h3>
+					<p>Topluluk pozitif sinyali. 200+ commend güçlü Trust göstergesi.</p>
+				</div>
+				<div class="toc-tf-feature">
+					<span class="ico">⚠️</span>
+					<h3>Ban Geçmişi</h3>
+					<p>VAC, game ve community ban'ler Trust'ı sıfıra yakın indirir.</p>
+				</div>
+				<div class="toc-tf-feature">
+					<span class="ico">📚</span>
+					<h3>Oyun Kütüphanesi</h3>
+					<p>Çok oyun = ciddi Steam yatırımı = bot olma ihtimali düşük.</p>
+				</div>
+				<div class="toc-tf-feature">
+					<span class="ico">👥</span>
+					<h3>Sosyal Sinyaller</h3>
+					<p>Arkadaş sayısı, Steam seviyesi, profil görünürlüğü sosyal hesap göstergesi.</p>
+				</div>
+			</div>
+		</section>
+
+		<section class="toc-tf-section">
+			<div class="toc-section-head">
+				<span class="toc-label">// SECTOR — FAQ</span>
+				<h2>Sıkça Sorulan Sorular</h2>
+			</div>
+			<div class="toc-tf-faq">
+				<details class="toc-faq-item">
+					<summary>Trust Factor tahmini gerçek mi?</summary>
+					<p>Valve Trust Factor'ı dış API ile vermez (gizli kalır). Bu araç topluluk bilgisine dayalı tahmin yapar. Yaygın faktörler (hesap yaşı, saat, commend, ban) ile gerçek Trust arasında ~%85 korelasyon vardır.</p>
+				</details>
+				<details class="toc-faq-item">
+					<summary>Steam şifremi vermem gerekir mi?</summary>
+					<p><strong>Hayır, asla.</strong> Sadece Steam ID veya profil URL'si girersin. Tüm veriler Steam'in resmi public Web API'sından çekilir.</p>
+				</details>
+				<details class="toc-faq-item">
+					<summary>Verilerim kaydediliyor mu?</summary>
+					<p>Sadece anonim istatistik (skor + tier) kayıt edilir. Steam ID 30 gün sonra silinir, kişisel veri tutulmaz.</p>
+				</details>
+				<details class="toc-faq-item">
+					<summary>Skor düşük çıkarsa ne yapmalıyım?</summary>
+					<p>Araç sana özel öneriler sunar (commend boost, saat boost, profil ayarları). Önerileri uygulayarak Trust'ı kademeli yükseltebilirsin.</p>
+				</details>
+				<details class="toc-faq-item">
+					<summary>"Derin analiz" nedir?</summary>
+					<p>Public Steam API commend sayısını vermez. Derin analiz işaretlersen bot havuzumuzdan oyunun GC'sine bağlanıp gerçek commend sayını çekiyoruz. ~10 saniye uzar ama çok daha doğru sonuç verir.</p>
+				</details>
+			</div>
+		</section>
+
+	</div>
+</main>
+
+<footer class="toc-footer">
+	<div class="toc-footer-bottom">
+		<span data-i18n="footer">cscommends.com © 2025-2026 // ALL RIGHTS RESERVED</span>
+	</div>
+</footer>
+
+
+<script>
+function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#x27;' })[c]); }
+function fmtScore(n) { return Number(n).toFixed(1); }
+
+const form = document.getElementById('tfForm');
+const errBox = document.getElementById('tfErr');
+const resultBox = document.getElementById('tfResult');
+const loading = document.getElementById('tfLoading');
+const loadingDetail = document.getElementById('tfLoadingDetail');
+const submitBtn = document.getElementById('tfAnalyze');
+
+form.addEventListener('submit', async (e) => {
+	e.preventDefault();
+	const input = document.getElementById('steamInput').value.trim();
+	const deep = document.getElementById('tfDeep').checked;
+	if (!input) { showErr('Lütfen Steam ID veya profil URL gir'); return; }
+
+	errBox.style.display = 'none';
+	resultBox.classList.remove('show');
+	resultBox.innerHTML = '';
+	submitBtn.disabled = true;
+	submitBtn.textContent = '🔍 Analiz ediliyor...';
+	loading.style.display = '';
+	loadingDetail.textContent = deep ? 'GC\'den commend sayısı çekiliyor (10-20s sürebilir)' : 'Public Steam API verileri çekiliyor';
+
+	try {
+		const path = deep ? '/api/trust-factor/analyze-deep' : '/api/trust-factor/analyze';
+		const res = await fetch(path, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ steamInput: input })
+		});
+		const data = await res.json();
+		if (!res.ok || !data.ok) {
+			showErr(data.message || data.error || 'Analiz başarısız');
+			return;
+		}
+		renderResult(data);
+		setTimeout(() => resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
+	} catch (ex) {
+		showErr(ex.message || 'Bağlantı hatası');
+	} finally {
+		submitBtn.disabled = false;
+		submitBtn.textContent = '🔍 Trust Factor\'ümü Tahmin Et';
+		loading.style.display = 'none';
+	}
+});
+
+function showErr(msg) {
+	errBox.textContent = '⚠️ ' + msg;
+	errBox.style.display = '';
+}
+
+function renderResult(data) {
+	const t = data.tier;
+	const profile = data.profile;
+	const breakdown = data.breakdown;
+	const recs = data.recommendations;
+
+	const profileHead =
+		'<div class="tf-profile-head">' +
+			'<img src="' + escapeHtml(profile.avatarurl) + '" alt="" loading="lazy">' +
+			'<div style="flex:1; min-width:0;">' +
+				'<div class="name">' + escapeHtml(profile.personaname || 'Bilinmeyen') + '</div>' +
+				'<div class="url"><a href="' + escapeHtml(profile.profileurl) + '" target="_blank" rel="noopener">' + escapeHtml(profile.profileurl) + ' ↗</a></div>' +
+			'</div>' +
+			(data.deepAnalysis ? '<span style="background:rgba(74,222,128,0.1); color:#4ade80; padding:0.3rem 0.6rem; border-radius:9999px; font-size:0.7rem; font-weight:700;">DERİN ANALİZ</span>' : '') +
+		'</div>';
+
+	const fillPct = Math.max(2, data.score);
+	const scoreCard =
+		'<div class="tf-score-card tier-' + escapeHtml(t.tier) + '">' +
+			'<div class="tf-score-num" style="color:' + escapeHtml(t.color) + ';">' + fmtScore(data.score) + '<span style="font-size:1.4rem; color:var(--fg-3); font-weight:600;">/100</span></div>' +
+			'<div class="tf-score-tier" style="color:' + escapeHtml(t.color) + ';">' + escapeHtml(t.label) + '</div>' +
+			'<div class="tf-score-desc">' + escapeHtml(t.description) + '</div>' +
+			'<div class="tf-meter"><div class="tf-meter-fill" style="width:' + fillPct + '%;"></div></div>' +
+			'<div class="tf-meter-stops"><span>Kritik</span><span>Düşük</span><span>Orta</span><span>İyi</span><span>Mükemmel</span></div>' +
+		'</div>';
+
+	const labels = {
+		accountAge: ['📅', 'Hesap Yaşı'],
+		cs2Hours: ['⏱️', 'CS2 Oyun Saati'],
+		gameLibrary: ['📚', 'Oyun Kütüphanesi'],
+		steamLevel: ['⭐', 'Steam Seviyesi'],
+		friendCount: ['👥', 'Arkadaş Sayısı'],
+		profilePublic: ['👁️', 'Profil Görünürlüğü'],
+		lastOnline: ['🟢', 'Son Aktivite'],
+		commendCount: ['👍', 'CS2 Commend Sayısı'],
+		bans: ['⚠️', 'Ban Geçmişi']
+	};
+	const breakdownRows = Object.keys(labels).map(key => {
+		const item = breakdown[key];
+		if (!item) return '';
+		const [icon, name] = labels[key];
+		return '<div class="tf-row">' +
+			'<div class="icon">' + icon + '</div>' +
+			'<div class="body">' +
+				'<div class="label">' + name + ' — ' + escapeHtml(item.label) + '</div>' +
+				'<div class="detail">' + escapeHtml(item.detail || '') + '</div>' +
+			'</div>' +
+			'<div class="score"><b>' + (item.points || 0) + '</b>/' + (item.max || 0) + '</div>' +
+		'</div>';
+	}).join('');
+
+	const breakdownCard =
+		'<div class="tf-breakdown">' +
+			'<h3>📊 Detaylı Skor Dökümü</h3>' +
+			breakdownRows +
+		'</div>';
+
+	const recsHtml = recs.map(r => {
+		const ext = r.external ? ' target="_blank" rel="noopener"' : '';
+		return '<div class="tf-rec priority-' + r.priority + '">' +
+			'<div class="icon">' + escapeHtml(r.icon) + '</div>' +
+			'<div class="body">' +
+				'<div class="title">' + escapeHtml(r.title) + '</div>' +
+				'<div class="reason">' + escapeHtml(r.reason) + '</div>' +
+				'<a href="' + escapeHtml(r.ctaUrl) + '"' + ext + ' class="cta">' + escapeHtml(r.ctaLabel) + ' →</a>' +
+			'</div>' +
+		'</div>';
+	}).join('');
+
+	const recsCard = recs.length
+		? '<div class="tf-recs"><h3>🎯 Önerilen Aksiyonlar (Trust\'ı yükselt)</h3>' + recsHtml + '</div>'
+		: '';
+
+	const shareUrl = encodeURIComponent('https://cscommends.com/trust-factor');
+	const shareText = encodeURIComponent(`CS2 Trust Factor skorum: ${fmtScore(data.score)}/100 (${t.label}). Sen de test et:`);
+	const shareCard =
+		'<div class="tf-share">' +
+			'<div class="ttl">📤 Sonucu Paylaş</div>' +
+			'<div class="btns">' +
+				'<a href="https://twitter.com/intent/tweet?text=' + shareText + '&url=' + shareUrl + '" target="_blank" rel="noopener">Twitter / X</a>' +
+				'<a href="https://discord.com/channels/@me" target="_blank" rel="noopener">Discord\'a Yapıştır</a>' +
+				'<a href="javascript:void(0)" onclick="copyResultLink(' + data.score + ', \'' + escapeHtml(t.label).replace(/'/g, "\\'") + '\')">Linki Kopyala</a>' +
+			'</div>' +
+		'</div>';
+
+	resultBox.innerHTML = profileHead + scoreCard + breakdownCard + recsCard + shareCard;
+	resultBox.classList.add('show');
+}
+
+function copyResultLink(score, tierLabel) {
+	const text = `CS2 Trust Factor skorum: ${score.toFixed(1)}/100 (${tierLabel}). Sen de test et: https://cscommends.com/trust-factor`;
+	navigator.clipboard?.writeText(text).then(() => {
+		alert('Kopyalandı! İstediğin yere yapıştırabilirsin.');
+	}).catch(() => {
+		prompt('Kopyala:', text);
+	});
+}
+</script>
+
+	<script src="/js/announcement-banner.js" defer></script>
+	<script src="/js/tawk.js" defer></script>
+	<script src="/js/sale-popup.js?v=4" defer></script>
+</body>
+</html>

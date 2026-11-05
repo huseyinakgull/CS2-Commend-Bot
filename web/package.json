@@ -1,0 +1,14 @@
+{
+  "name": "cs2-commend-web",
+  "version": "1.0.0",
+  "description": "CS2 Commend Bot Web Panel",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.0.0",
+    "express": "^4.21.0",
+    "jsonwebtoken": "^9.0.0"
+  }
+}

@@ -1,0 +1,227 @@
+User-agent: *
+Allow: /
+Allow: /free-commend
+Allow: /hours-boost
+Allow: /group-boost
+Allow: /hakkimizda
+Allow: /gizlilik
+Allow: /kullanim-kosullari
+Allow: /bayilik
+Allow: /trust-factor
+Allow: /blog
+Allow: /blog/*
+Allow: /en/
+Allow: /de/
+Allow: /ru/
+Allow: /pt/
+Allow: /es/
+Allow: /fr/
+Allow: /pl/
+Allow: /css/
+Allow: /js/
+Allow: /lang/
+Allow: /favicon-16x16.png
+Allow: /favicon-32x32.png
+Allow: /apple-touch-icon.png
+Allow: /icon-192.png
+Allow: /logo.jpg
+Allow: /manifest.webmanifest
+Allow: /llms.txt
+Disallow: /dashboard
+Disallow: /login
+Disallow: /admin
+Disallow: /reseller
+Disallow: /reseller-login
+Disallow: /api/
+Disallow: /*?token=
+Disallow: /*?lang=
+Disallow: /*?ref=
+Disallow: /*?utm_
+
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /reseller
+Disallow: /reseller-login
+Disallow: /login
+
+User-agent: Googlebot-Image
+Allow: /
+Disallow: /api/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /reseller
+Disallow: /reseller-login
+Disallow: /login
+
+User-agent: YandexBot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /reseller
+Disallow: /reseller-login
+Disallow: /login
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /reseller
+Disallow: /reseller-login
+
+User-agent: Baiduspider
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /reseller
+Disallow: /reseller-login
+
+User-agent: Applebot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /reseller
+Disallow: /reseller-login
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Facebot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+User-agent: Discordbot
+Allow: /
+
+User-agent: Slackbot-LinkExpanding
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /reseller
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /reseller
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /reseller
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /reseller
+
+User-agent: Perplexity-User
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /reseller
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /reseller
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /reseller
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /reseller
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /reseller
+
+User-agent: cohere-ai
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /reseller
+
+User-agent: Bytespider
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+
+User-agent: DiffbotBot
+Allow: /
+Disallow: /api/
+Disallow: /admin
+
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Crawl-delay: 10
+
+User-agent: DotBot
+Crawl-delay: 10
+
+User-agent: BLEXBot
+Crawl-delay: 10
+
+User-agent: SeznamBot
+Crawl-delay: 10
+
+Sitemap: https://cscommends.com/sitemap.xml
+Sitemap: https://cscommends.com/sitemap-pages.xml
+Sitemap: https://cscommends.com/sitemap-blog.xml
+Sitemap: https://cscommends.com/sitemap-images.xml

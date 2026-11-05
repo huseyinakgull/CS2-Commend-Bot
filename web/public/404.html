@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sayfa Bulunamadı — CS Commends</title>
+	<meta name="robots" content="noindex, follow">
+	<meta name="theme-color" content="#0e0e15">
+	<link rel="icon" type="image/jpeg" href="/logo.jpg">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/theme.css">
+
+	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="/css/theme-toc.css?v=1">
+
+	<style>
+		body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+		.wrap { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1rem; text-align: center; position: relative; }
+		.bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+		.bg::before { content: ''; position: absolute; width: 600px; height: 600px; border-radius: 50%; filter: blur(140px); background: rgba(239, 90, 71, 0.18); top: -200px; left: 50%; transform: translateX(-50%); }
+		.content { position: relative; z-index: 1; max-width: 540px; }
+		.big { font-size: clamp(5rem, 15vw, 10rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1; background: linear-gradient(135deg, var(--brand), #fb923c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 0 0 0.8rem; }
+		h1 { font-size: clamp(1.4rem, 2vw + 1rem, 1.9rem); margin: 0 0 0.6rem; }
+		p { color: var(--fg-3); font-size: 0.98rem; line-height: 1.55; margin: 0 0 1.5rem; }
+	</style>
+</head>
+<body>
+
+<div class="bg"></div>
+
+<div class="wrap">
+	<div class="content">
+		<div class="big">404</div>
+		<h1>Aradığın sayfa bulunamadı</h1>
+		<p>
+			Girdiğin URL yanlış olabilir veya içerik taşınmış olabilir. Aşağıdaki linklerden dilediğine göz atabilirsin.
+		</p>
+
+		<div class="cluster cluster-center">
+			<a href="/" class="btn btn-primary">🏠 Ana Sayfa</a>
+			<a href="/free-commend" class="btn btn-accent-green">20 Ücretsiz Commend</a>
+			<a href="/blog" class="btn btn-ghost">Rehberler</a>
+		</div>
+
+		<div class="mt-4" style="padding-top: 1.5rem; border-top: 1px solid var(--bd-1); max-width: 420px; margin: 2rem auto 0;">
+			<p class="fs-sm text-muted mb-2" style="margin-bottom: 1rem;">Popüler sayfalar:</p>
+			<div class="cluster cluster-center" style="gap: 0.35rem;">
+				<a href="/hours-boost" class="btn btn-sm btn-ghost">Saat Boost</a>
+				<a href="/group-boost" class="btn btn-sm btn-ghost">Grup Üye</a>
+				<a href="/blog/cs2-trust-factor-rehberi" class="btn btn-sm btn-ghost">Trust Factor</a>
+				<a href="/hakkimizda" class="btn btn-sm btn-ghost">Hakkımızda</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<script src="/js/tawk.js" defer></script>
+	<script src="/js/sale-popup.js?v=4" defer></script>
+</body>
+</html>
